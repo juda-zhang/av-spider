@@ -11,6 +11,10 @@ import java.util.List;
  */
 public class MovieDO extends BaseDO{
     /**
+     * 编号前缀
+     */
+    private String codePrefix;
+    /**
      * 编号
      */
     private String code;
@@ -54,6 +58,19 @@ public class MovieDO extends BaseDO{
      * 内容预览
      */
     private List<String> previewUrls;
+
+    /**
+     * 种子文件的地址
+     */
+    private List<String> torrentUrls;
+
+    public String getCodePrefix() {
+        return codePrefix;
+    }
+
+    public void setCodePrefix(String codePrefix) {
+        this.codePrefix = codePrefix;
+    }
 
     public List<String> getActors() {
         return actors;
@@ -141,6 +158,14 @@ public class MovieDO extends BaseDO{
 
     public void setPreviewUrls(List<String> previewUrls) {
         this.previewUrls = previewUrls;
+    }
+
+    public List<String> getTorrentUrls() {
+        return torrentUrls;
+    }
+
+    public void setTorrentUrls(List<String> torrentUrls) {
+        this.torrentUrls = torrentUrls;
     }
 
     /**
