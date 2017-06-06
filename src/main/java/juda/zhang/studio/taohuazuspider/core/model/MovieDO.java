@@ -51,6 +51,14 @@ public class MovieDO extends BaseDO{
      */
     private List<String> tags;
     /**
+     * 片长，单位分钟
+     */
+    private Integer duration;
+    /**
+     * 发行日期,YYYY-MM-DD
+     */
+    private String issueDate;
+    /**
      * 封面预览
      */
     private String coverImgUrl;
@@ -134,6 +142,22 @@ public class MovieDO extends BaseDO{
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Integer duration) {
+        this.duration = duration;
+    }
+
+    public String getIssueDate() {
+        return issueDate;
+    }
+
+    public void setIssueDate(String issueDate) {
+        this.issueDate = issueDate;
     }
 
     public List<String> getActresses() {
