@@ -23,6 +23,18 @@ public class MovieDO extends BaseDO{
      */
     private String title;
     /**
+     * 0:亚洲 1:欧美 2:大陆 3:港台 4:东南亚 5:中亚 6:南美 7:其他
+     */
+    private Integer region;
+    /**
+     * 0：无码 1:有码
+     */
+    private Integer censoredType;
+    /**
+     * 0:成人 1:素人 2:三级 3:写真
+     */
+    private Integer type;
+    /**
      * 女优名称
      */
     private List<String> actresses;
@@ -30,6 +42,10 @@ public class MovieDO extends BaseDO{
      * 男优名称
      */
     private List<String> actors;
+    /**
+     * 标签
+     */
+    private List<String> tags;
     /**
      * 导演
      */
@@ -46,10 +62,6 @@ public class MovieDO extends BaseDO{
      * 系列
      */
     private String series;
-    /**
-     * 标签
-     */
-    private List<String> tags;
     /**
      * 片长，单位分钟
      */
@@ -190,6 +202,29 @@ public class MovieDO extends BaseDO{
 
     public void setTorrentUrls(List<String> torrentUrls) {
         this.torrentUrls = torrentUrls;
+    }
+    public int getRegion() {
+        return region;
+    }
+
+    public void setRegion(int region) {
+        this.region = region;
+    }
+
+    public int getCensoredType() {
+        return censoredType;
+    }
+
+    public void setCensoredType(int censoredType) {
+        this.censoredType = censoredType;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     /**
