@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 描述影片的DO
+ * 描述作品的DO
  * Created by 晨辉 on 2017/6/6.
  */
 public class ProductDO extends BaseDO {
