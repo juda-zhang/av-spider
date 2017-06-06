@@ -1,9 +1,13 @@
 package juda.zhang.studio.taohuazuspider.core.processor;
 
+import juda.zhang.studio.taohuazuspider.utils.StringUtils;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.processor.PageProcessor;
-import us.codecraft.webmagic.selector.Selectable;
+
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 解析桃花族论坛亚洲有碼原創板块的帖子，下载其中的种子文件以及图片。
@@ -41,14 +45,39 @@ public class TaohuazuPageProcessor implements PageProcessor {
         if (page.getUrl().regex(URL_LIST).match()) {
             ////tbody[@id='normalthread*']/tr/td[@class="icn"]
             //Selectable s=page.getHtml().xpath("//tbody[@id='normalthread'*]/tr/td[@class='icn']");
-            page.addTargetRequests(page.getHtml().xpath("//tbody/tr/td[@class='icn']").links().regex(URL_POST).all());
+            page.addTargetRequests(page.getHtml().$("tbody[id^=normalthread_]").xpath("//tbody/tr/td[@class='icn']").links().regex(URL_POST).all());
             //获取所有符合列表格式的列表页
             page.addTargetRequests(page.getHtml().links().regex(URL_LIST).all());
             //文章页
         } else if (page.getUrl().regex(URL_POST).match()) {
-            String title = page.getHtml().xpath("//span[@id='thread_subject']/text()").toString();
+            //获取完整标题
+            String fullTitle = StringUtils.trimAndUpper(page.getHtml().xpath("//span[@id='thread_subject']/text()").toString());
+            if (StringUtils.isBlank(fullTitle)) {
+                System.out.println("无法正确解析的url=" + page.getUrl());
+                return;
+            }
 
-            page.putField("title", title.toString());
+            //解析编号
+            String regex = "(?<=\\[)(\\S+)(?=\\])";
+            Matcher m = Pattern.compile(regex).matcher(fullTitle);
+            String code = StringUtils.trimAndUpper(m.find() ? m.group() : "");
+
+            //解析标题
+
+
+            //解析封面
+            String coverImgUrl = page.getHtml().xpath("//ignore_js_op/img/@file").toString();
+            //解析预览
+            List<String> previewUrls = page.getHtml().$("img[id^=aimg_]").xpath("/img/@file").all();
+
+            if ( StringUtils.isBlank(coverImgUrl)) {
+                System.out.println("无法正确解析的url=" + page.getUrl());
+                return;
+            }
+            page.putField("fullTitle", fullTitle);
+            page.putField("code", code);
+            page.putField("coverImgUrl", coverImgUrl);
+            page.putField("previewUrls", previewUrls);
             /*page.putField("content", page.getHtml().xpath("//div[@id='articlebody']//div[@class='articalContent']"));
             page.putField("date",
                     page.getHtml().xpath("//div[@id='articlebody']//span[@class='time SG_txtc']").regex("\\((.*)\\)"));*/
