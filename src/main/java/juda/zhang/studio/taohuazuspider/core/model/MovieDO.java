@@ -23,6 +23,30 @@ public class MovieDO extends BaseDO{
      */
     private List<String> actresses;
     /**
+     * 男优名称
+     */
+    private List<String> actors;
+    /**
+     * 导演
+     */
+    private String director;
+    /**
+     * 制片商
+     */
+    private String manufacturer;
+    /**
+     * 出品方
+     */
+    private String producer;
+    /**
+     * 系列
+     */
+    private String series;
+    /**
+     * 标签
+     */
+    private List<String> tags;
+    /**
      * 封面预览
      */
     private String coverImgUrl;
@@ -30,6 +54,54 @@ public class MovieDO extends BaseDO{
      * 内容预览
      */
     private List<String> previewUrls;
+
+    public List<String> getActors() {
+        return actors;
+    }
+
+    public void setActors(List<String> actors) {
+        this.actors = actors;
+    }
+
+    public String getDirector() {
+        return director;
+    }
+
+    public void setDirector(String director) {
+        this.director = director;
+    }
+
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
+    }
+
+    public String getProducer() {
+        return producer;
+    }
+
+    public void setProducer(String producer) {
+        this.producer = producer;
+    }
+
+    public String getSeries() {
+        return series;
+    }
+
+    public void setSeries(String series) {
+        this.series = series;
+    }
+
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
+    }
 
     public String getCode() {
         return code;
