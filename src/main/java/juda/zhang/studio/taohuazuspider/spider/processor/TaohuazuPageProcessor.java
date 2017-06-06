@@ -1,6 +1,6 @@
 package juda.zhang.studio.taohuazuspider.spider.processor;
 
-import juda.zhang.studio.taohuazuspider.core.model.MovieDO;
+import juda.zhang.studio.taohuazuspider.core.model.ProductDO;
 import juda.zhang.studio.taohuazuspider.utils.StringUtils;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
@@ -77,12 +77,12 @@ public class TaohuazuPageProcessor implements PageProcessor {
                 return;
             }
 
-            MovieDO movieDO=new MovieDO();
-            movieDO.setCode(code);
-            movieDO.setTitle(fullTitle);
-            movieDO.setCoverImgUrl(coverImgUrl);
-            movieDO.setPreviewUrls(previewUrls);
-            page.putField("movieDO", movieDO);
+            ProductDO productDO = new ProductDO();
+            productDO.setCode(code);
+            productDO.setTitle(fullTitle);
+            productDO.setCoverImgUrl(coverImgUrl);
+            productDO.setPreviewUrls(previewUrls);
+            page.putField("productDO", productDO);
         } else {
             System.out.println("不支持的url=" + page.getUrl());
         }

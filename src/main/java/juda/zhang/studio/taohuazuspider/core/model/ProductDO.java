@@ -9,7 +9,7 @@ import java.util.List;
  * 描述影片的DO
  * Created by 晨辉 on 2017/6/6.
  */
-public class MovieDO extends BaseDO {
+public class ProductDO extends BaseDO {
     /**
      * 编号前缀
      */
