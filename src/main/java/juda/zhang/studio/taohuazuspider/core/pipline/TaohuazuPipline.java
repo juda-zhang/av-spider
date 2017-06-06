@@ -1,5 +1,6 @@
 package juda.zhang.studio.taohuazuspider.core.pipline;
 
+import juda.zhang.studio.taohuazuspider.core.model.MovieDO;
 import us.codecraft.webmagic.ResultItems;
 import us.codecraft.webmagic.Task;
 import us.codecraft.webmagic.pipeline.Pipeline;
@@ -19,15 +20,13 @@ public class TaohuazuPipline implements Pipeline {
     public static final String DEST_DIR = "C:/TaoHuaZu";
 
     public void process(ResultItems resultItems, Task task) {
-        Boolean isCorrect = resultItems.get("isCorrect") == null ? false : (Boolean) resultItems.get("isCorrect");
-        if (isCorrect) {
-            String fullTitle = resultItems.get("fullTitle");
-            String code = resultItems.get("code");
-            String coverImgUrl = resultItems.get("coverImgUrl");
-            List<String> previewUrls = resultItems.get("previewUrls");
-
+        MovieDO movieDO = resultItems.get("movieDO");
+        if (movieDO != null) {
+            String fullTitle = movieDO.getTitle();
+            String code = movieDO.getCode();
+            String coverImgUrl = movieDO.getCoverImgUrl();
+            List<String> previewUrls = movieDO.getPreviewUrls();
             //previewUrls.add(coverImgUrl);
-
             try {
                 downLoadPics(previewUrls, DEST_DIR, fullTitle);
             } catch (Exception e) {
