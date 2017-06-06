@@ -9,7 +9,7 @@ import java.util.List;
  * 描述影片的DO
  * Created by 晨辉 on 2017/6/6.
  */
-public class MovieDO extends BaseDO{
+public class MovieDO extends BaseDO {
     /**
      * 编号前缀
      */
@@ -203,6 +203,7 @@ public class MovieDO extends BaseDO{
     public void setTorrentUrls(List<String> torrentUrls) {
         this.torrentUrls = torrentUrls;
     }
+
     public int getRegion() {
         return region;
     }

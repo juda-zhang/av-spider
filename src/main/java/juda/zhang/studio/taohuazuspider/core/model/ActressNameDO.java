@@ -5,7 +5,7 @@ package juda.zhang.studio.taohuazuspider.core.model;
  * 与ActressDO关系为1：N
  * Created by Juda.Zhang on 2017/6/7.
  */
-public class ActressNameDO extends BaseDO{
+public class ActressNameDO extends BaseDO {
     /**
      * 女优Id
      */
@@ -26,6 +26,7 @@ public class ActressNameDO extends BaseDO{
     public void setActressId(long actressId) {
         this.actressId = actressId;
     }
+
     public String getName() {
         return name;
     }

@@ -111,6 +111,7 @@ public class ActressDO extends BaseDO {
     public void setHobbies(String hobbies) {
         this.hobbies = hobbies;
     }
+
     public String getBirthday() {
         return birthday;
     }
