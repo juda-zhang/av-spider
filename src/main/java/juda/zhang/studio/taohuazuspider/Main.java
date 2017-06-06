@@ -1,7 +1,7 @@
 package juda.zhang.studio.taohuazuspider;
 
-import juda.zhang.studio.taohuazuspider.core.pipline.TaohuazuPipline;
-import juda.zhang.studio.taohuazuspider.core.processor.TaohuazuPageProcessor;
+import juda.zhang.studio.taohuazuspider.pipline.TaohuazuPipline;
+import juda.zhang.studio.taohuazuspider.processor.TaohuazuPageProcessor;
 import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.monitor.SpiderMonitor;
 import us.codecraft.webmagic.pipeline.ConsolePipeline;

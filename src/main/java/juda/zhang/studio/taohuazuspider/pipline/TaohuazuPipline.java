@@ -1,4 +1,4 @@
-package juda.zhang.studio.taohuazuspider.core.pipline;
+package juda.zhang.studio.taohuazuspider.pipline;
 
 import juda.zhang.studio.taohuazuspider.core.model.MovieDO;
 import us.codecraft.webmagic.ResultItems;
@@ -18,22 +18,6 @@ import java.util.List;
 public class TaohuazuPipline implements Pipeline {
 
     public static final String DEST_DIR = "C:/TaoHuaZu";
-
-    public void process(ResultItems resultItems, Task task) {
-        MovieDO movieDO = resultItems.get("movieDO");
-        if (movieDO != null) {
-            String fullTitle = movieDO.getTitle();
-            String code = movieDO.getCode();
-            String coverImgUrl = movieDO.getCoverImgUrl();
-            List<String> previewUrls = movieDO.getPreviewUrls();
-            //previewUrls.add(coverImgUrl);
-            try {
-                downLoadPics(previewUrls, DEST_DIR, fullTitle);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
     //    Accept:image/webp,image/*,*/*;q=0.8
 //    Accept-Encoding:gzip, deflate, sdch
@@ -78,5 +62,21 @@ public class TaohuazuPipline implements Pipeline {
             i++;
         }
         return isSuccess;
+    }
+
+    public void process(ResultItems resultItems, Task task) {
+        MovieDO movieDO = resultItems.get("movieDO");
+        if (movieDO != null) {
+            String fullTitle = movieDO.getTitle();
+            String code = movieDO.getCode();
+            String coverImgUrl = movieDO.getCoverImgUrl();
+            List<String> previewUrls = movieDO.getPreviewUrls();
+            //previewUrls.add(coverImgUrl);
+            try {
+                downLoadPics(previewUrls, DEST_DIR, fullTitle);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
