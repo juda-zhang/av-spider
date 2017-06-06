@@ -1,14 +1,20 @@
 package juda.zhang.studio.taohuazuspider.core.model;
 
+import java.util.List;
+
 /**
  * 女优的基本信息
  * Created by Juda.Zhang on 2017/6/7.
  */
 public class ActressDO extends BaseDO {
     /**
-     * 女优的现用姓名,唯一
+     * 女优的现用艺名,唯一
      */
     private String name;
+    /**
+     * 女优现用艺名姓名,曾用艺名
+     */
+    private List<String> names;
     /**
      * 出生日期YYYY-MM-DD
      */
@@ -111,5 +117,13 @@ public class ActressDO extends BaseDO {
 
     public void setBirthday(String birthday) {
         this.birthday = birthday;
+    }
+
+    public List<String> getNames() {
+        return names;
+    }
+
+    public void setNames(List<String> names) {
+        this.names = names;
     }
 }
