@@ -41,6 +41,7 @@ public class TaohuazuPageProcessor implements PageProcessor {
             .setUserAgent(USER_AGENT);
 
     public void process(Page page) {
+
         //列表页
         if (page.getUrl().regex(URL_LIST).match()) {
             ////tbody[@id='normalthread*']/tr/td[@class="icn"]
@@ -68,12 +69,13 @@ public class TaohuazuPageProcessor implements PageProcessor {
             //解析封面
             String coverImgUrl = page.getHtml().xpath("//ignore_js_op/img/@file").toString();
             //解析预览
-            List<String> previewUrls = page.getHtml().$("img[id^=aimg_]").xpath("/img/@file").all();
+            List<String> previewUrls = page.getHtml().xpath("//div[@class='pcb']//td[@class='t_f']/img/@file").all();
 
-            if ( StringUtils.isBlank(coverImgUrl)) {
+            if (StringUtils.isBlank(coverImgUrl)) {
                 System.out.println("无法正确解析的url=" + page.getUrl());
                 return;
             }
+            page.putField("isCorrect", true);
             page.putField("fullTitle", fullTitle);
             page.putField("code", code);
             page.putField("coverImgUrl", coverImgUrl);
