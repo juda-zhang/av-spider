@@ -1,4 +1,4 @@
-package juda.zhang.studio.taohuazuspider.pipline;
+package juda.zhang.studio.taohuazuspider.spider.pipline;
 
 import juda.zhang.studio.taohuazuspider.core.model.MovieDO;
 import us.codecraft.webmagic.ResultItems;

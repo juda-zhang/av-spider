@@ -1,4 +1,4 @@
-package juda.zhang.studio.taohuazuspider.processor;
+package juda.zhang.studio.taohuazuspider.spider.processor;
 
 import juda.zhang.studio.taohuazuspider.core.model.MovieDO;
 import juda.zhang.studio.taohuazuspider.utils.StringUtils;
