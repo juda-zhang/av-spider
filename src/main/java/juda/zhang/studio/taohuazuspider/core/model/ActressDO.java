@@ -1,28 +1,26 @@
 package juda.zhang.studio.taohuazuspider.core.model;
 
-import java.util.List;
-
 /**
  * 女优的基本信息
  * Created by Juda.Zhang on 2017/6/7.
  */
 public class ActressDO extends BaseDO {
     /**
-     * 女优姓名
+     * 女优的现用姓名,唯一
      */
     private String name;
     /**
-     * 别称，曾用名
+     * 出生日期YYYY-MM-DD
      */
-    private List<String> nickNames;
-    /**
-     * 身高，单位cm
-     */
-    private Integer height;
+    private String birthday;
     /**
      * 罩杯
      */
     private String cup;
+    /**
+     * 身高，单位cm
+     */
+    private Integer height;
     /**
      * 0:亚洲 1:欧美 2:大陆 3:港台 4:东南亚 5:中亚 6:南美 7:其他
      */
@@ -50,14 +48,6 @@ public class ActressDO extends BaseDO {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public List<String> getNickNames() {
-        return nickNames;
-    }
-
-    public void setNickNames(List<String> nickNames) {
-        this.nickNames = nickNames;
     }
 
     public Integer getHeight() {
@@ -114,5 +104,12 @@ public class ActressDO extends BaseDO {
 
     public void setHobbies(String hobbies) {
         this.hobbies = hobbies;
+    }
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
     }
 }
