@@ -20,11 +20,11 @@
     </appender>
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+        <!--<filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>INFO</level>
             <onMatch>ACCEPT</onMatch>
             <onMismatch>DENY</onMismatch>
-        </filter>
+        </filter>-->
         <encoder>
             <pattern>
                 %-4relative [%thread] %-5level %logger{30} - %msg%n
@@ -33,10 +33,10 @@
     </appender>
 
     <!--myibatis log configure -->
-    <logger name="org.mybatis" level="DEBUG"/>
+    <!--<logger name="org.mybatis" level="INFO"/>
     <logger name="java.sql.Connection" level="INFO"/>
     <logger name="java.sql.Statement" level="INFO"/>
-    <logger name="java.sql.PreparedStatement" level="INFO"/>
+    <logger name="java.sql.PreparedStatement" level="INFO"/>-->
 
     <root level="DEBUG">
         <appender-ref ref="corgiAppender"/>
