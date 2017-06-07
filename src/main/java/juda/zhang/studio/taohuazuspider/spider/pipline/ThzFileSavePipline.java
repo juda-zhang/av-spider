@@ -13,6 +13,7 @@ import us.codecraft.webmagic.pipeline.Pipeline;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -38,7 +39,7 @@ public class ThzFileSavePipline implements Pipeline {
 //    If-None-Match:"135588cccddd21:0"
 //    Referer:http://taohuabbs.cc/thread-1064225-1-2.html
 //    User-Agent:Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36
-    public static boolean downLoadFiles(List<String> fileUrls, String dir, String fileName, String format) throws Exception {
+    public static boolean downLoadFiles(List<String> fileUrls, String dir, String fileName, String format) {
         boolean isSuccess = true;
         //创建根目录
         File fileDir = new File(dir);
@@ -54,25 +55,30 @@ public class ThzFileSavePipline implements Pipeline {
             try {
                 url = new URL(fileUrl);
             } catch (MalformedURLException e) {
-                LOGGER.error("文件路径不正确!忽略!fileUrl={},fileName={},seq={}", fileUrl, fileName, i);
+                LOGGER.error("文件路径不正确!忽略!fileUrl=" + fileUrl + ",fileName=" + fileName + ",seq=" + i + "", e);
                 continue;
             }
 
-            // 打开网络输入流
-            DataInputStream dis = new DataInputStream(url.openStream());
-            String seq = fileUrls.size() == 1 ? "" : "_" + i;
-            String newImageName = dir + "/" + fileName + seq + "." + format;
-            // 建立一个新的文件
-            FileOutputStream fos = new FileOutputStream(new File(newImageName));
-            byte[] buffer = new byte[1024];
-            int length;
-            LOGGER.info("正在下载文件,请稍候。fileUrl={},fileName={},seq={}", fileUrl, fileName, i);
-            // 开始填充数据
-            while ((length = dis.read(buffer)) > 0) {
-                fos.write(buffer, 0, length);
+            try {
+                // 打开网络输入流
+                DataInputStream dis = new DataInputStream(url.openStream());
+                String seq = fileUrls.size() == 1 ? "" : "_" + i;
+                String newImageName = dir + "/" + fileName + seq + "." + format;
+                // 建立一个新的文件
+                FileOutputStream fos = new FileOutputStream(new File(newImageName));
+                byte[] buffer = new byte[1024];
+                int length;
+                LOGGER.info("正在下载文件,请稍候。fileUrl={},fileName={},seq={}", fileUrl, fileName, i);
+                // 开始填充数据
+                while ((length = dis.read(buffer)) > 0) {
+                    fos.write(buffer, 0, length);
+                }
+                dis.close();
+                fos.close();
+            } catch (IOException e) {
+                LOGGER.error("文件下载出错!fileUrl=" + fileUrl + ",fileName=" + fileName + ",seq=" + i + "", e);
+                continue;
             }
-            dis.close();
-            fos.close();
             LOGGER.info("文件下载完毕。fileUrl={},seq={}", fileUrl, i);
             i++;
         }
