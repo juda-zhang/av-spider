@@ -20,11 +20,11 @@ import java.util.List;
  * 保存文件的管道
  * Created by 晨辉 on 2017/6/5.
  */
-@Service("taohuazuPipline")
-public class TaohuazuPipline implements Pipeline {
+@Service("thzFileSavePipline")
+public class ThzFileSavePipline implements Pipeline {
 
     public static final String DEST_DIR = "C:/TaoHuaZu";
-    private final static Logger LOGGER = LoggerFactory.getLogger(TaohuazuPipline.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(ThzFileSavePipline.class);
 
     //    Accept:image/webp,image/*,*/*;q=0.8
 //    Accept-Encoding:gzip, deflate, sdch
@@ -36,23 +36,23 @@ public class TaohuazuPipline implements Pipeline {
 //    If-None-Match:"135588cccddd21:0"
 //    Referer:http://taohuabbs.cc/thread-1064225-1-2.html
 //    User-Agent:Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36
-    public static boolean downLoadFiles(List<String> imgUrls, String filePath, String title, String format) throws Exception {
+    public static boolean downLoadFiles(List<String> fileUrls, String dir, String fileName, String format) throws Exception {
         boolean isSuccess = true;
         //创建根目录
-        File fileDir = new File(filePath);
+        File fileDir = new File(dir);
         fileDir.mkdirs();
         // 创建子目录
-        String dir = filePath + "/" + title;
-        fileDir = new File(dir);
-        fileDir.mkdirs();
+        //fileDir = new File(dir);
+        //fileDir.mkdirs();
 
-        int i = 0;
+        int i = 1;
         // 循环下载图片
-        for (String imgUrl : imgUrls) {
-            URL url = new URL(imgUrl);
+        for (String fileUrl : fileUrls) {
+            URL url = new URL(fileUrl);
             // 打开网络输入流
             DataInputStream dis = new DataInputStream(url.openStream());
-            String newImageName = dir + "/" + title + "_" + i + "." + format;
+            String seq = fileUrls.size() == 1 ? "" : "_" + i;
+            String newImageName = dir + "/" + fileName + seq + "." + format;
             // 建立一个新的文件
             FileOutputStream fos = new FileOutputStream(new File(newImageName));
             byte[] buffer = new byte[1024];
@@ -64,7 +64,7 @@ public class TaohuazuPipline implements Pipeline {
             }
             dis.close();
             fos.close();
-            LOGGER.info("第 " + i + "张图片下载完毕.");
+            LOGGER.info("第 " + i + "个文件下载完毕.");
             i++;
         }
         return isSuccess;
@@ -76,8 +76,10 @@ public class TaohuazuPipline implements Pipeline {
             String fullTitle = productDO.getTitle();
             String code = productDO.getCode();
             String coverImgUrl = productDO.getCoverImgUrl();
+
+            String dir = DEST_DIR + "/" + fullTitle;
             try {
-                downLoadFiles(productDO.getAllImgUrls(), DEST_DIR, fullTitle, "jpg");
+                downLoadFiles(productDO.getAllImgUrls(), dir, fullTitle, "jpg");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -88,11 +90,12 @@ public class TaohuazuPipline implements Pipeline {
                 try {
                     List<String> torrentUrls = new ArrayList<>();
                     torrentUrls.add(torrentUrl);
-                    downLoadFiles(torrentUrls, DEST_DIR, fullTitle, "torrent");
+                    downLoadFiles(torrentUrls, dir, code, "torrent");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         }
     }
+
 }

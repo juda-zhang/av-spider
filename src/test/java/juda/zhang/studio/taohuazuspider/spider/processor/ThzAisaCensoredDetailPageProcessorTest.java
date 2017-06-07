@@ -15,11 +15,11 @@ import javax.annotation.Resource;
  * @version v 0.1 15/1/20 16:11 aaronyue Exp $$
  */
 @RunWith(SpringRunner.class)
-public class TaohuazuPageProcessorTest {
+public class ThzAisaCensoredDetailPageProcessorTest {
 
     @Resource
     @InjectMocks
-    private TaohuazuPageProcessor taohuazuPageProcessor;
+    private ThzAisaCensoredDetailPageProcessor thzAisaCensoredDetailPageProcessor;
 
     @Before
     public void prepare() {
@@ -29,6 +29,6 @@ public class TaohuazuPageProcessorTest {
 
     public void testProcess() {
         Page page = new Page();
-        taohuazuPageProcessor.process(page);
+        thzAisaCensoredDetailPageProcessor.process(page);
     }
 }

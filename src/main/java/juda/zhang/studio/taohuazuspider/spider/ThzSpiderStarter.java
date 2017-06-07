@@ -1,7 +1,7 @@
 package juda.zhang.studio.taohuazuspider.spider;
 
-import juda.zhang.studio.taohuazuspider.spider.pipline.TaohuazuPipline;
-import juda.zhang.studio.taohuazuspider.spider.processor.TaohuazuPageProcessor;
+import juda.zhang.studio.taohuazuspider.spider.pipline.ThzFileSavePipline;
+import juda.zhang.studio.taohuazuspider.spider.processor.ThzAisaCensoredDetailPageProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -18,24 +18,24 @@ import javax.management.JMException;
  * Created by zhangchenhui160 on 2017/6/7.
  */
 @Service
-public class TaohuazuSpiderStarter {
+public class ThzSpiderStarter {
     public static final int THREAD_NUM = 1;
     public static final String START_URL = "http://taohuabbs.cc/forum-220-1.html";
-    private final static Logger LOGGER = LoggerFactory.getLogger(TaohuazuSpiderStarter.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(ThzSpiderStarter.class);
     @Resource
-    private TaohuazuPageProcessor taohuazuPageProcessor;
+    private ThzAisaCensoredDetailPageProcessor thzAisaCensoredDetailPageProcessor;
     @Resource
-    private TaohuazuPipline taohuazuPipline;
+    private ThzFileSavePipline thzFileSavePipline;
 
     private Spider taohuazuSpider;
 
     @PostConstruct
     private void run() {
-        taohuazuSpider = Spider.create(taohuazuPageProcessor)
+        taohuazuSpider = Spider.create(thzAisaCensoredDetailPageProcessor)
                 .thread(THREAD_NUM)
                 .addUrl(START_URL)
                 .addPipeline(new ConsolePipeline())
-                .addPipeline(taohuazuPipline);
+                .addPipeline(thzFileSavePipline);
         try {
             SpiderMonitor.instance().register(taohuazuSpider);
         } catch (JMException e) {

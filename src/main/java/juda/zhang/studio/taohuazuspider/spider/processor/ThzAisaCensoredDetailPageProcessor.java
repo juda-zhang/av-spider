@@ -18,10 +18,12 @@ import java.util.regex.Pattern;
  * 解析桃花族论坛亚洲有碼原創板块的帖子，下载其中的种子文件以及图片。
  * Created by 晨辉 on 2017/6/5.
  */
-@Service("taohuazuPageProcessor")
-public class TaohuazuPageProcessor implements PageProcessor {
+@Service("thzAisaCensoredDetailPageProcessor")
+public class ThzAisaCensoredDetailPageProcessor implements PageProcessor {
 
     public static final String DOMAIN = "taohuabbs.cc";
+    public static final String TORRENT_URL_PREFIX = "http://" + DOMAIN + "/forum.php?mod=attachment&aid=";
+    public static final int TIME_OUT = 60000;
     public static final int SLEEP_TIME = 100;
     public static final String USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_2) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.65 Safari/537.31";
     /*
@@ -36,11 +38,12 @@ public class TaohuazuPageProcessor implements PageProcessor {
     http://taohuabbs.cc/thread-1064271-1-5.html
      */
     public static final String URL_POST = "http://taohuabbs\\.cc/thread-\\d+-\\d+-\\d+\\.html";
-    private final static Logger LOGGER = LoggerFactory.getLogger(TaohuazuPageProcessor.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(ThzAisaCensoredDetailPageProcessor.class);
     private Site site = Site
             .me()
             .setDomain(DOMAIN)
             .setSleepTime(SLEEP_TIME)
+            .setTimeOut(TIME_OUT)
             .setUserAgent(USER_AGENT);
 
     public void process(Page page) {
@@ -83,7 +86,7 @@ public class TaohuazuPageProcessor implements PageProcessor {
                 LOGGER.info("无法正确解析种子的url={}", page.getUrl());
                 return;
             } else {
-                torrentUrl = torrentLink[1];
+                torrentUrl = TORRENT_URL_PREFIX + torrentLink[1];
             }
 
             ProductDO productDO = new ProductDO();

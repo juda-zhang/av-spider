@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <appender name="corgiAppender"
+    <!--<appender name="corgiAppender"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>C:/taohuazu-spider.log</file>
         <append>true</append>
@@ -17,7 +17,7 @@
             <pattern>%d{yyy-MM-dd HH:mm:ss,GMT+8} %p %t - %m%n</pattern>
             <charset class="java.nio.charset.Charset">UTF-8</charset>
         </encoder>
-    </appender>
+    </appender>-->
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <!--<filter class="ch.qos.logback.classic.filter.LevelFilter">
@@ -39,7 +39,7 @@
     <logger name="java.sql.PreparedStatement" level="INFO"/>-->
 
     <root level="INFO">
-        <appender-ref ref="corgiAppender"/>
+        <!--<appender-ref ref="corgiAppender"/>-->
         <appender-ref ref="CONSOLE"/>
     </root>
 

@@ -2,7 +2,7 @@
 <configuration>
     <appender name="corgiAppender"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>C:/taohuazu-spider.log</file>
+        <file>C:/TEMP/taohuazu-spider.log</file>
         <append>true</append>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>C:/taohuazu-spider-%d{yyyy-MM-dd}.%i.log
