@@ -42,7 +42,6 @@ public class TaohuazuSpiderStarter {
             LOGGER.error("taohuazu-spider监控注册失败!", e);
         }
         taohuazuSpider.start();
-        taohuazuSpider.stop();
         LOGGER.info("taohuazu-spider启动完毕!");
     }
 

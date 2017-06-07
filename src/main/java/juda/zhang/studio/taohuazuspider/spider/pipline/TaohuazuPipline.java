@@ -44,14 +44,13 @@ public class TaohuazuPipline implements Pipeline {
         fileDir = new File(dir);
         fileDir.mkdirs();
 
-        int i = 1;
+        int i = 0;
         // 循环下载图片
         for (String imgUrl : imgUrls) {
             URL url = new URL(imgUrl);
             // 打开网络输入流
             DataInputStream dis = new DataInputStream(url.openStream());
-            int x = (int) (Math.random() * 1000000);
-            String newImageName = dir + "/" + x + "pic" + i + ".jpg";
+            String newImageName = dir + "/" + title + "_pic" + i + ".jpg";
             // 建立一个新的文件
             FileOutputStream fos = new FileOutputStream(new File(newImageName));
             byte[] buffer = new byte[1024];
@@ -75,10 +74,8 @@ public class TaohuazuPipline implements Pipeline {
             String fullTitle = productDO.getTitle();
             String code = productDO.getCode();
             String coverImgUrl = productDO.getCoverImgUrl();
-            List<String> previewUrls = productDO.getPreviewUrls();
-            //previewUrls.add(coverImgUrl);
             try {
-                downLoadPics(previewUrls, DEST_DIR, fullTitle);
+                downLoadPics(productDO.getAllImgUrls(), DEST_DIR, fullTitle);
             } catch (Exception e) {
                 e.printStackTrace();
             }
