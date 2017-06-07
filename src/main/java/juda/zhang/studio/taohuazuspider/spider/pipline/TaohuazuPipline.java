@@ -1,5 +1,6 @@
 package juda.zhang.studio.taohuazuspider.spider.pipline;
 
+import juda.zhang.studio.taohuazuspider.core.model.FilmDO;
 import juda.zhang.studio.taohuazuspider.core.model.ProductDO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +13,7 @@ import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,7 +36,7 @@ public class TaohuazuPipline implements Pipeline {
 //    If-None-Match:"135588cccddd21:0"
 //    Referer:http://taohuabbs.cc/thread-1064225-1-2.html
 //    User-Agent:Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36
-    public static boolean downLoadPics(List<String> imgUrls, String filePath, String title) throws Exception {
+    public static boolean downLoadFiles(List<String> imgUrls, String filePath, String title, String format) throws Exception {
         boolean isSuccess = true;
         //创建根目录
         File fileDir = new File(filePath);
@@ -50,19 +52,19 @@ public class TaohuazuPipline implements Pipeline {
             URL url = new URL(imgUrl);
             // 打开网络输入流
             DataInputStream dis = new DataInputStream(url.openStream());
-            String newImageName = dir + "/" + title + "_pic" + i + ".jpg";
+            String newImageName = dir + "/" + title + "_" + i + "." + format;
             // 建立一个新的文件
             FileOutputStream fos = new FileOutputStream(new File(newImageName));
             byte[] buffer = new byte[1024];
             int length;
-            LOGGER.info("正在下载......第 " + i + "张图片......请稍后");
+            LOGGER.info("正在下载第 " + i + "个文件。请稍候。。。");
             // 开始填充数据
             while ((length = dis.read(buffer)) > 0) {
                 fos.write(buffer, 0, length);
             }
             dis.close();
             fos.close();
-            LOGGER.info("第 " + i + "张图片下载完毕......");
+            LOGGER.info("第 " + i + "张图片下载完毕.");
             i++;
         }
         return isSuccess;
@@ -75,9 +77,21 @@ public class TaohuazuPipline implements Pipeline {
             String code = productDO.getCode();
             String coverImgUrl = productDO.getCoverImgUrl();
             try {
-                downLoadPics(productDO.getAllImgUrls(), DEST_DIR, fullTitle);
+                downLoadFiles(productDO.getAllImgUrls(), DEST_DIR, fullTitle, "jpg");
             } catch (Exception e) {
                 e.printStackTrace();
+            }
+
+            FilmDO filmDO = resultItems.get("filmDO");
+            String torrentUrl = filmDO.getFileUrl();
+            if (filmDO != null) {
+                try {
+                    List<String> torrentUrls = new ArrayList<>();
+                    torrentUrls.add(torrentUrl);
+                    downLoadFiles(torrentUrls, DEST_DIR, fullTitle, "torrent");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

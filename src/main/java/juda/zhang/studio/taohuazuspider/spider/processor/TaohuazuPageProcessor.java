@@ -69,20 +69,21 @@ public class TaohuazuPageProcessor implements PageProcessor {
 
             //解析封面
             String coverImgUrl = page.getHtml().xpath("//ignore_js_op/img/@file").toString();
+            if (StringUtils.isBlank(coverImgUrl)) {
+                LOGGER.info("无法正确解析封面预览的url={}", page.getUrl());
+                return;
+            }
+
             //解析预览
             List<String> previewUrls = page.getHtml().xpath("//div[@class='pcb']//td[@class='t_f']/img/@file").all();
             //解析种子地址
-            String torrentUrl = null;
+            String torrentUrl;
             String[] torrentLink = page.getHtml().xpath("//div[@class='pattl']//a/@href").toString().split("aid=");
             if (torrentLink == null || torrentLink.length < 2) {
-                LOGGER.info("无法正确解析的url={}", page.getUrl());
+                LOGGER.info("无法正确解析种子的url={}", page.getUrl());
+                return;
             } else {
                 torrentUrl = torrentLink[1];
-            }
-
-            if (StringUtils.isBlank(coverImgUrl)) {
-                LOGGER.info("无法正确解析的url={}", page.getUrl());
-                return;
             }
 
             ProductDO productDO = new ProductDO();
