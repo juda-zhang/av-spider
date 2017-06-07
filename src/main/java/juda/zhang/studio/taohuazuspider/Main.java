@@ -1,32 +1,23 @@
 package juda.zhang.studio.taohuazuspider;
 
-import juda.zhang.studio.taohuazuspider.spider.pipline.TaohuazuPipline;
-import juda.zhang.studio.taohuazuspider.spider.processor.TaohuazuPageProcessor;
-import us.codecraft.webmagic.Spider;
-import us.codecraft.webmagic.monitor.SpiderMonitor;
-import us.codecraft.webmagic.pipeline.ConsolePipeline;
-
-import javax.management.JMException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * Created by 晨辉 on 2017/6/5.
  */
+@Configuration
+@ComponentScan
+@EnableAutoConfiguration
 public class Main {
-    public static final int THREAD_NUM = 1;
-
-    public static final String START_URL = "http://taohuabbs.cc/forum-220-1.html";
+    private final static Logger LOGGER = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args) {
-        Spider taohuazuSpider = Spider.create(new TaohuazuPageProcessor())
-                .thread(THREAD_NUM)
-                .addUrl(START_URL)
-                .addPipeline(new ConsolePipeline())
-                .addPipeline(new TaohuazuPipline());
-        try {
-            SpiderMonitor.instance().register(taohuazuSpider);
-        } catch (JMException e) {
-            e.printStackTrace();
-        }
-        taohuazuSpider.start();
+        SpringApplication.run(Main.class, args);
+        LOGGER.info("taohuazu-spider has been started successfully!");
     }
 }

@@ -3,6 +3,7 @@ package juda.zhang.studio.taohuazuspider.spider.pipline;
 import juda.zhang.studio.taohuazuspider.core.model.ProductDO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 import us.codecraft.webmagic.ResultItems;
 import us.codecraft.webmagic.Task;
 import us.codecraft.webmagic.pipeline.Pipeline;
@@ -17,6 +18,7 @@ import java.util.List;
  * 保存文件的管道
  * Created by 晨辉 on 2017/6/5.
  */
+@Service("taohuazuPipline")
 public class TaohuazuPipline implements Pipeline {
 
     public static final String DEST_DIR = "C:/TaoHuaZu";

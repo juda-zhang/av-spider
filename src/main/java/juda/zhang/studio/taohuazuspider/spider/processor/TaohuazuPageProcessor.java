@@ -4,6 +4,7 @@ import juda.zhang.studio.taohuazuspider.core.model.ProductDO;
 import juda.zhang.studio.taohuazuspider.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.processor.PageProcessor;
@@ -16,6 +17,7 @@ import java.util.regex.Pattern;
  * 解析桃花族论坛亚洲有碼原創板块的帖子，下载其中的种子文件以及图片。
  * Created by 晨辉 on 2017/6/5.
  */
+@Service("taohuazuPageProcessor")
 public class TaohuazuPageProcessor implements PageProcessor {
 
     public static final String DOMAIN = "taohuabbs.cc";
