@@ -54,14 +54,14 @@ public class TaohuazuPipline implements Pipeline {
             FileOutputStream fos = new FileOutputStream(new File(newImageName));
             byte[] buffer = new byte[1024];
             int length;
-            System.out.println("正在下载......第 " + i + "张图片......请稍后");
+            LOGGER.info("正在下载......第 " + i + "张图片......请稍后");
             // 开始填充数据
             while ((length = dis.read(buffer)) > 0) {
                 fos.write(buffer, 0, length);
             }
             dis.close();
             fos.close();
-            System.out.println("第 " + i + "张图片下载完毕......");
+            LOGGER.info("第 " + i + "张图片下载完毕......");
             i++;
         }
         return isSuccess;
