@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.monitor.SpiderMonitor;
 import us.codecraft.webmagic.pipeline.ConsolePipeline;
+import us.codecraft.webmagic.scheduler.FileCacheQueueScheduler;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -20,6 +21,7 @@ import javax.management.JMException;
 @Service
 public class ThzSpiderStarter {
     public static final int THREAD_NUM = 1;
+    public static final String TEMP_FILE_DIR = "C:/TEMP";
     public static final String START_URL = "http://taohuabbs.cc/forum-220-1.html";
     private final static Logger LOGGER = LoggerFactory.getLogger(ThzSpiderStarter.class);
     @Resource
@@ -33,6 +35,7 @@ public class ThzSpiderStarter {
     private void run() {
         taohuazuSpider = Spider.create(thzAisaCensoredDetailPageProcessor)
                 .thread(THREAD_NUM)
+                .setScheduler(new FileCacheQueueScheduler(TEMP_FILE_DIR))
                 .addUrl(START_URL)
                 .addPipeline(new ConsolePipeline())
                 .addPipeline(thzFileSavePipline);

@@ -70,7 +70,7 @@ public class ThzFileSavePipline implements Pipeline {
         return isSuccess;
     }
 
-    public void process(ResultItems resultItems, Task task) {
+    public void process(ResultItems resultItems, Task task) throws RuntimeException {
         ProductDO productDO = resultItems.get("productDO");
         if (productDO != null) {
             String fullTitle = productDO.getTitle();
@@ -81,7 +81,8 @@ public class ThzFileSavePipline implements Pipeline {
             try {
                 downLoadFiles(productDO.getAllImgUrls(), dir, fullTitle, "jpg");
             } catch (Exception e) {
-                e.printStackTrace();
+                LOGGER.info("保存预览文件出错!code=" + code + ",fullTitle=" + fullTitle, e);
+                throw new RuntimeException(e);
             }
 
             FilmDO filmDO = resultItems.get("filmDO");
@@ -92,7 +93,8 @@ public class ThzFileSavePipline implements Pipeline {
                     torrentUrls.add(torrentUrl);
                     downLoadFiles(torrentUrls, dir, code, "torrent");
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    LOGGER.info("保存种子文件出错!code=" + code + ",fullTitle=" + fullTitle, e);
+                    throw new RuntimeException(e);
                 }
             }
         }
