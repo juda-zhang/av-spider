@@ -13,6 +13,7 @@ import us.codecraft.webmagic.processor.PageProcessor;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * 解析桃花族论坛亚洲有碼原創板块的帖子，下载其中的种子文件以及图片。
@@ -79,6 +80,10 @@ public class ThzAisaCensoredDetailPageProcessor implements PageProcessor {
 
             //解析预览
             List<String> previewUrls = page.getHtml().xpath("//div[@class='pcb']//td[@class='t_f']/img/@file").all();
+            if (previewUrls != null || previewUrls.size() != 0) {
+                previewUrls = previewUrls.stream().filter(n -> !StringUtils.isBlank(n)).collect(Collectors.toList());
+            }
+
             //解析种子地址
             String torrentUrl;
             String[] torrentLink = page.getHtml().xpath("//div[@class='pattl']//a/@href").toString().split("aid=");

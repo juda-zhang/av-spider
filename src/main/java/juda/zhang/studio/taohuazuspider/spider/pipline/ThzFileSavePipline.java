@@ -2,6 +2,7 @@ package juda.zhang.studio.taohuazuspider.spider.pipline;
 
 import juda.zhang.studio.taohuazuspider.core.model.FilmDO;
 import juda.zhang.studio.taohuazuspider.core.model.ProductDO;
+import juda.zhang.studio.taohuazuspider.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ import us.codecraft.webmagic.pipeline.Pipeline;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,14 +43,21 @@ public class ThzFileSavePipline implements Pipeline {
         //创建根目录
         File fileDir = new File(dir);
         fileDir.mkdirs();
-        // 创建子目录
-        //fileDir = new File(dir);
-        //fileDir.mkdirs();
-
         int i = 1;
         // 循环下载图片
         for (String fileUrl : fileUrls) {
-            URL url = new URL(fileUrl);
+            if (StringUtils.isBlank(fileUrl)) {
+                LOGGER.error("文件路径为空!忽略!fileName={},seq={}", fileName, i);
+                continue;
+            }
+            URL url;
+            try {
+                url = new URL(fileUrl);
+            } catch (MalformedURLException e) {
+                LOGGER.error("文件路径不正确!忽略!fileUrl={},fileName={},seq={}", fileUrl, fileName, i);
+                continue;
+            }
+
             // 打开网络输入流
             DataInputStream dis = new DataInputStream(url.openStream());
             String seq = fileUrls.size() == 1 ? "" : "_" + i;
@@ -57,20 +66,20 @@ public class ThzFileSavePipline implements Pipeline {
             FileOutputStream fos = new FileOutputStream(new File(newImageName));
             byte[] buffer = new byte[1024];
             int length;
-            LOGGER.info("正在下载第 " + i + "个文件。请稍候。。。");
+            LOGGER.info("正在下载文件,请稍候。fileUrl={},fileName={},seq={}", fileUrl, fileName, i);
             // 开始填充数据
             while ((length = dis.read(buffer)) > 0) {
                 fos.write(buffer, 0, length);
             }
             dis.close();
             fos.close();
-            LOGGER.info("第 " + i + "个文件下载完毕.");
+            LOGGER.info("文件下载完毕。fileUrl={},seq={}", fileUrl, i);
             i++;
         }
         return isSuccess;
     }
 
-    public void process(ResultItems resultItems, Task task) throws RuntimeException {
+    public void process(ResultItems resultItems, Task task) {
         ProductDO productDO = resultItems.get("productDO");
         if (productDO != null) {
             String fullTitle = productDO.getTitle();
@@ -82,7 +91,6 @@ public class ThzFileSavePipline implements Pipeline {
                 downLoadFiles(productDO.getAllImgUrls(), dir, fullTitle, "jpg");
             } catch (Exception e) {
                 LOGGER.info("保存预览文件出错!code=" + code + ",fullTitle=" + fullTitle, e);
-                throw new RuntimeException(e);
             }
 
             FilmDO filmDO = resultItems.get("filmDO");
@@ -94,7 +102,6 @@ public class ThzFileSavePipline implements Pipeline {
                     downLoadFiles(torrentUrls, dir, code, "torrent");
                 } catch (Exception e) {
                     LOGGER.info("保存种子文件出错!code=" + code + ",fullTitle=" + fullTitle, e);
-                    throw new RuntimeException(e);
                 }
             }
         }

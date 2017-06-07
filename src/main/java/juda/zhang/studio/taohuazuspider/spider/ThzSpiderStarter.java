@@ -20,7 +20,7 @@ import javax.management.JMException;
  */
 @Service
 public class ThzSpiderStarter {
-    public static final int THREAD_NUM = 1;
+    public static final int THREAD_NUM = 2;
     public static final String TEMP_FILE_DIR = "C:/TEMP";
     public static final String START_URL = "http://taohuabbs.cc/forum-220-1.html";
     private final static Logger LOGGER = LoggerFactory.getLogger(ThzSpiderStarter.class);
