@@ -1,6 +1,8 @@
 package juda.zhang.studio.taohuazuspider.spider.pipline;
 
 import juda.zhang.studio.taohuazuspider.core.model.ProductDO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import us.codecraft.webmagic.ResultItems;
 import us.codecraft.webmagic.Task;
 import us.codecraft.webmagic.pipeline.Pipeline;
@@ -18,6 +20,7 @@ import java.util.List;
 public class TaohuazuPipline implements Pipeline {
 
     public static final String DEST_DIR = "C:/TaoHuaZu";
+    private final static Logger LOGGER = LoggerFactory.getLogger(TaohuazuPipline.class);
 
     //    Accept:image/webp,image/*,*/*;q=0.8
 //    Accept-Encoding:gzip, deflate, sdch

@@ -2,6 +2,8 @@ package juda.zhang.studio.taohuazuspider.spider.processor;
 
 import juda.zhang.studio.taohuazuspider.core.model.ProductDO;
 import juda.zhang.studio.taohuazuspider.utils.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.processor.PageProcessor;
@@ -17,11 +19,8 @@ import java.util.regex.Pattern;
 public class TaohuazuPageProcessor implements PageProcessor {
 
     public static final String DOMAIN = "taohuabbs.cc";
-
     public static final int SLEEP_TIME = 100;
-
     public static final String USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_2) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.65 Safari/537.31";
-
     /*
     列表页面
     http://taohuabbs.cc/forum-220-1.html
@@ -34,7 +33,7 @@ public class TaohuazuPageProcessor implements PageProcessor {
     http://taohuabbs.cc/thread-1064271-1-5.html
      */
     public static final String URL_POST = "http://taohuabbs\\.cc/thread-\\d+-\\d+-\\d+\\.html";
-
+    private final static Logger LOGGER = LoggerFactory.getLogger(TaohuazuPageProcessor.class);
     private Site site = Site
             .me()
             .setDomain(DOMAIN)
@@ -55,7 +54,7 @@ public class TaohuazuPageProcessor implements PageProcessor {
             //获取完整标题
             String fullTitle = StringUtils.trimAndUpper(page.getHtml().xpath("//span[@id='thread_subject']/text()").toString());
             if (StringUtils.isBlank(fullTitle)) {
-                System.out.println("无法正确解析的url=" + page.getUrl());
+                LOGGER.info("无法正确解析的url={}", page.getUrl());
                 return;
             }
 
@@ -63,9 +62,7 @@ public class TaohuazuPageProcessor implements PageProcessor {
             String regex = "(?<=\\[)(\\S+)(?=\\])";
             Matcher m = Pattern.compile(regex).matcher(fullTitle);
             String code = StringUtils.trimAndUpper(m.find() ? m.group() : "");
-
             //解析标题
-
 
             //解析封面
             String coverImgUrl = page.getHtml().xpath("//ignore_js_op/img/@file").toString();
@@ -73,7 +70,7 @@ public class TaohuazuPageProcessor implements PageProcessor {
             List<String> previewUrls = page.getHtml().xpath("//div[@class='pcb']//td[@class='t_f']/img/@file").all();
 
             if (StringUtils.isBlank(coverImgUrl)) {
-                System.out.println("无法正确解析的url=" + page.getUrl());
+                LOGGER.info("无法正确解析的url={}", page.getUrl());
                 return;
             }
 
@@ -84,7 +81,7 @@ public class TaohuazuPageProcessor implements PageProcessor {
             productDO.setPreviewUrls(previewUrls);
             page.putField("productDO", productDO);
         } else {
-            System.out.println("不支持的url=" + page.getUrl());
+            LOGGER.info("不支持的url={}", page.getUrl());
         }
     }
 
