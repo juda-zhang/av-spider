@@ -18,6 +18,10 @@ public class ActressNameDO extends BaseDO {
      * 英文名，唯一
      */
     private String englishName;
+    /**
+     * 1:显示 0:不显示
+     */
+    private int isShow;
 
     public long getActressId() {
         return actressId;
@@ -41,5 +45,13 @@ public class ActressNameDO extends BaseDO {
 
     public void setEnglishName(String englishName) {
         this.englishName = englishName;
+    }
+
+    public int getIsShow() {
+        return isShow;
+    }
+
+    public void setIsShow(int isShow) {
+        this.isShow = isShow;
     }
 }

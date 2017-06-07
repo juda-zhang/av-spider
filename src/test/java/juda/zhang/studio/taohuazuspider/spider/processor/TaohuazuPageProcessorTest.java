@@ -2,8 +2,10 @@ package juda.zhang.studio.taohuazuspider.spider.processor;
 
 
 import org.junit.Before;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
+import org.springframework.test.context.junit4.SpringRunner;
 import us.codecraft.webmagic.Page;
 
 import javax.annotation.Resource;
@@ -12,8 +14,7 @@ import javax.annotation.Resource;
  * @author yuewenxin
  * @version v 0.1 15/1/20 16:11 aaronyue Exp $$
  */
-//@RunWith(SpringJUnit4ClassRunner.class)
-//@SpringApplicationConfiguration(classes = {Main.class})
+@RunWith(SpringRunner.class)
 public class TaohuazuPageProcessorTest {
 
     @Resource

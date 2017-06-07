@@ -1,5 +1,6 @@
 package juda.zhang.studio.taohuazuspider.spider.processor;
 
+import juda.zhang.studio.taohuazuspider.core.model.FilmDO;
 import juda.zhang.studio.taohuazuspider.core.model.ProductDO;
 import juda.zhang.studio.taohuazuspider.utils.StringUtils;
 import org.slf4j.Logger;
@@ -70,6 +71,14 @@ public class TaohuazuPageProcessor implements PageProcessor {
             String coverImgUrl = page.getHtml().xpath("//ignore_js_op/img/@file").toString();
             //解析预览
             List<String> previewUrls = page.getHtml().xpath("//div[@class='pcb']//td[@class='t_f']/img/@file").all();
+            //解析种子地址
+            String torrentUrl = null;
+            String[] torrentLink = page.getHtml().xpath("//div[@class='pattl']//a/@href").toString().split("aid=");
+            if (torrentLink == null || torrentLink.length < 2) {
+                LOGGER.info("无法正确解析的url={}", page.getUrl());
+            } else {
+                torrentUrl = torrentLink[1];
+            }
 
             if (StringUtils.isBlank(coverImgUrl)) {
                 LOGGER.info("无法正确解析的url={}", page.getUrl());
@@ -81,7 +90,11 @@ public class TaohuazuPageProcessor implements PageProcessor {
             productDO.setTitle(fullTitle);
             productDO.setCoverImgUrl(coverImgUrl);
             productDO.setPreviewUrls(previewUrls);
+
+            FilmDO filmDO = new FilmDO();
+            filmDO.setFileUrl(torrentUrl);
             page.putField("productDO", productDO);
+            page.putField("filmDO", filmDO);
         } else {
             LOGGER.info("不支持的url={}", page.getUrl());
         }

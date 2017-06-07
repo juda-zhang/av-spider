@@ -19,6 +19,10 @@ public class ProductDO extends BaseDO {
      */
     private String code;
     /**
+     * 制片商
+     */
+    private String manufacturer;
+    /**
      * 标题
      */
     private String title;
@@ -51,10 +55,6 @@ public class ProductDO extends BaseDO {
      */
     private String director;
     /**
-     * 制片商
-     */
-    private String manufacturer;
-    /**
      * 出品方
      */
     private String producer;
@@ -78,11 +78,6 @@ public class ProductDO extends BaseDO {
      * 内容预览
      */
     private List<String> previewUrls;
-
-    /**
-     * 种子文件的地址
-     */
-    private List<String> torrentUrls;
 
     public String getCodePrefix() {
         return codePrefix;
@@ -194,14 +189,6 @@ public class ProductDO extends BaseDO {
 
     public void setPreviewUrls(List<String> previewUrls) {
         this.previewUrls = previewUrls;
-    }
-
-    public List<String> getTorrentUrls() {
-        return torrentUrls;
-    }
-
-    public void setTorrentUrls(List<String> torrentUrls) {
-        this.torrentUrls = torrentUrls;
     }
 
     public int getRegion() {
