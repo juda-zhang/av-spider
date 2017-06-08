@@ -1,0 +1,13 @@
+site:
+#域名
+  domain: taohuabbs.org
+#超时时间(ms)
+  timeout:  60000
+#休眠时间(ms)
+  sleep.time: 100
+
+#文件保存路径
+file.save.dir: "C:/TaoHuaZu"
+#爬虫线程数
+spider.thread:  1
+

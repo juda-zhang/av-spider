@@ -4,6 +4,7 @@ import juda.zhang.studio.taohuazuspider.spider.pipline.ThzFileSavePipline;
 import juda.zhang.studio.taohuazuspider.spider.processor.ThzAisaCensoredDetailPageProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.monitor.SpiderMonitor;
@@ -19,10 +20,12 @@ import javax.management.JMException;
  */
 @Service
 public class ThzSpiderStarter {
-    public static final int THREAD_NUM = 2;
     public static final String TEMP_FILE_DIR = "C:/TEMP";
-    public static final String START_URL = "http://taohuabbs.cc/forum-220-1.html";
     private final static Logger LOGGER = LoggerFactory.getLogger(ThzSpiderStarter.class);
+    @Value("${spider.thread}")
+    private int THREAD_NUM;
+    @Value("http://${site.domain}/forum-220-1.html")
+    private String START_URL;
     @Resource
     private ThzAisaCensoredDetailPageProcessor thzAisaCensoredDetailPageProcessor;
     @Resource

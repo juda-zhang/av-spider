@@ -5,6 +5,7 @@ import juda.zhang.studio.taohuazuspider.core.model.ProductDO;
 import juda.zhang.studio.taohuazuspider.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
@@ -21,25 +22,30 @@ import java.util.stream.Collectors;
  */
 @Service("thzAisaCensoredDetailPageProcessor")
 public class ThzAisaCensoredDetailPageProcessor implements PageProcessor {
-
-    public static final String DOMAIN = "taohuabbs.cc";
-    public static final String TORRENT_URL_PREFIX = "http://" + DOMAIN + "/forum.php?mod=attachment&aid=";
-    public static final int TIME_OUT = 60000;
-    public static final int SLEEP_TIME = 100;
     public static final String USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_2) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.65 Safari/537.31";
+    private final static Logger LOGGER = LoggerFactory.getLogger(ThzAisaCensoredDetailPageProcessor.class);
+    @Value("${site.domain}")
+    private String DOMAIN;
     /*
     列表页面
     http://taohuabbs.cc/forum-220-1.html
     http://taohuabbs.cc/forum-220-2.html
      */
-    public static final String URL_LIST = "http://taohuabbs\\.cc/forum-220-\\d+\\.html";
+    @Value("http://${site.domain}/forum-220-\\d+\\.html")
+    private String URL_LIST;
     /*
     详情页面
     http://taohuabbs.cc/thread-1064269-1-1.html
     http://taohuabbs.cc/thread-1064271-1-5.html
      */
-    public static final String URL_POST = "http://taohuabbs\\.cc/thread-\\d+-\\d+-\\d+\\.html";
-    private final static Logger LOGGER = LoggerFactory.getLogger(ThzAisaCensoredDetailPageProcessor.class);
+    @Value("http://${site.domain}/thread-\\d+-\\d+-\\d+\\.html")
+    private String URL_POST;
+    @Value("http://${site.domain}/forum.php?mod=attachment&aid=")
+    private String TORRENT_URL_PREFIX;
+    @Value("${site.timeout}")
+    private int TIME_OUT;
+    @Value("${site.sleep.time}")
+    private int SLEEP_TIME;
     private Site site = Site
             .me()
             .setDomain(DOMAIN)
@@ -51,15 +57,15 @@ public class ThzAisaCensoredDetailPageProcessor implements PageProcessor {
 
         //列表页
         if (page.getUrl().regex(URL_LIST).match()) {
-            ////tbody[@id='normalthread*']/tr/td[@class="icn"]
-            //Selectable s=page.getHtml().xpath("//tbody[@id='normalthread'*]/tr/td[@class='icn']");
-            page.addTargetRequests(page.getHtml().$("tbody[id^=normalthread_]").xpath("//tbody/tr/td[@class='icn']").links().regex(URL_POST).all());
+            page.addTargetRequests(page.getHtml().$("tbody[id^=normalthread_]")
+                    .xpath("//tbody/tr/td[@class='icn']").links().regex(URL_POST).all());
             //获取所有符合列表格式的列表页
             page.addTargetRequests(page.getHtml().links().regex(URL_LIST).all());
             //文章页
         } else if (page.getUrl().regex(URL_POST).match()) {
             //获取完整标题
-            String fullTitle = StringUtils.trimAndUpper(page.getHtml().xpath("//span[@id='thread_subject']/text()").toString());
+            String fullTitle = StringUtils.trimAndUpper(page.getHtml()
+                    .xpath("//span[@id='thread_subject']/text()").toString());
             if (StringUtils.isBlank(fullTitle)) {
                 LOGGER.info("无法正确解析的url={}", page.getUrl());
                 return;
@@ -79,14 +85,17 @@ public class ThzAisaCensoredDetailPageProcessor implements PageProcessor {
             }
 
             //解析预览
-            List<String> previewUrls = page.getHtml().xpath("//div[@class='pcb']//td[@class='t_f']/img/@file").all();
+            List<String> previewUrls = page.getHtml()
+                    .xpath("//div[@class='pcb']//td[@class='t_f']/img/@file").all();
             if (previewUrls != null || previewUrls.size() != 0) {
                 previewUrls = previewUrls.stream().filter(n -> !StringUtils.isBlank(n)).collect(Collectors.toList());
             }
 
             //解析种子地址
             String torrentUrl;
-            String[] torrentLink = page.getHtml().xpath("//div[@class='pattl']//a/@href").toString().split("aid=");
+            String[] torrentLink = page.getHtml()
+                    .xpath("//div[@class='pattl']//a/@href").toString()
+                    .split("aid=");
             if (torrentLink == null || torrentLink.length < 2) {
                 LOGGER.info("无法正确解析种子的url={}", page.getUrl());
                 return;

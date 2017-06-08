@@ -5,6 +5,7 @@ import juda.zhang.studio.taohuazuspider.core.model.ProductDO;
 import juda.zhang.studio.taohuazuspider.utils.HttpUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import us.codecraft.webmagic.ResultItems;
 import us.codecraft.webmagic.Task;
@@ -18,9 +19,9 @@ import java.util.List;
  */
 @Service("thzFileSavePipline")
 public class ThzFileSavePipline implements Pipeline {
-
-    public static final String DEST_DIR = "C:/TaoHuaZu";
     private final static Logger LOGGER = LoggerFactory.getLogger(ThzFileSavePipline.class);
+    @Value("${file.save.dir}")
+    private String DEST_DIR;
 
     public void process(ResultItems resultItems, Task task) {
         ProductDO productDO = resultItems.get("productDO");
