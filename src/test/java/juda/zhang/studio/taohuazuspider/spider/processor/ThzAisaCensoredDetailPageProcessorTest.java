@@ -11,8 +11,7 @@ import us.codecraft.webmagic.Page;
 import javax.annotation.Resource;
 
 /**
- * @author yuewenxin
- * @version v 0.1 15/1/20 16:11 aaronyue Exp $$
+ * @author Juda.Zhang
  */
 @RunWith(SpringRunner.class)
 public class ThzAisaCensoredDetailPageProcessorTest {

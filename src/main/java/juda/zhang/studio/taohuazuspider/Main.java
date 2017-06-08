@@ -8,7 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * Created by 晨辉 on 2017/6/5.
+ * Created by Juda.Zhang on 2017/6/5.
  */
 @Configuration
 @ComponentScan

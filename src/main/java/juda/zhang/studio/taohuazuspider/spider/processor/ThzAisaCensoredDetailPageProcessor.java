@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 /**
  * 解析桃花族论坛亚洲有碼原創板块的帖子，下载其中的种子文件以及图片。
- * Created by 晨辉 on 2017/6/5.
+ * Created by Juda.Zhang on 2017/6/5.
  */
 @Service("thzAisaCensoredDetailPageProcessor")
 public class ThzAisaCensoredDetailPageProcessor implements PageProcessor {

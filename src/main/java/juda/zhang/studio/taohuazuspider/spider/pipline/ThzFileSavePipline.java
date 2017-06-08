@@ -21,7 +21,7 @@ import java.util.List;
 
 /**
  * 保存文件的管道
- * Created by 晨辉 on 2017/6/5.
+ * Created by Juda.Zhang on 2017/6/5.
  */
 @Service("thzFileSavePipline")
 public class ThzFileSavePipline implements Pipeline {

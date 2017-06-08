@@ -16,7 +16,7 @@ import javax.annotation.Resource;
 import javax.management.JMException;
 
 /**
- * Created by zhangchenhui160 on 2017/6/7.
+ * Created by Juda.Zhang on 2017/6/7.
  */
 @Service
 public class ThzSpiderStarter {
