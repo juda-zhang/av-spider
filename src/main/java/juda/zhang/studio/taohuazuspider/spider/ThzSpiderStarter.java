@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.monitor.SpiderMonitor;
 import us.codecraft.webmagic.pipeline.ConsolePipeline;
-import us.codecraft.webmagic.scheduler.FileCacheQueueScheduler;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -35,7 +34,7 @@ public class ThzSpiderStarter {
     private void run() {
         taohuazuSpider = Spider.create(thzAisaCensoredDetailPageProcessor)
                 .thread(THREAD_NUM)
-                .setScheduler(new FileCacheQueueScheduler(TEMP_FILE_DIR))
+                //.setScheduler(new FileCacheQueueScheduler(TEMP_FILE_DIR))
                 .addUrl(START_URL)
                 .addPipeline(new ConsolePipeline())
                 .addPipeline(thzFileSavePipline);
