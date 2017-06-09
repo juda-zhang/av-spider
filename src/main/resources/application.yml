@@ -1,3 +1,16 @@
+#spring boot配置
+spring:
+  application.name: fundprod
+  datasource:
+    url: jdbc:mysql://localhost:3306/finance
+    username: root
+    password: 1234567890
+    driverClassName: com.mysql.jdbc.Driver
+    max-active: 20
+    max-idle: 10
+    testOnBorrow: true
+    validationQuery: SZELECT 1
+
 site:
 #域名
   domain: taohuabbs.org
