@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="juda.zhang.studio.taohuazuspider.core.dal.mapper.TagMapper">
+    <resultMap id="tagMap" type="TagDO">
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="japanese_name" property="japaneseName"/>
+        <result column="english_name" property="englishName"/>
+        <result column="gmt_created" javaType="java.util.Date" jdbcType="TIMESTAMP"
+                property="gmtCreated"/>
+        <result column="gmt_modified" javaType="java.util.Date" jdbcType="TIMESTAMP"
+                property="gmtModified"/>
+        <result column="version" property="version"/>
+    </resultMap>
+
+    <sql id="setColumns">
+        <if test="id != null">id=#{id},</if>
+        <if test="name != null">name = #{name},</if>
+        <if test="japaneseName != null">japanese_name = #{japaneseName},</if>
+        <if test="englishName != null">english_name = #{englishName},</if>
+        <choose>
+            <when test="gmtCreated != null">gmt_created = #{gmtCreated},</when>
+            <otherwise>gmt_created = now(),</otherwise>
+        </choose>
+        gmt_modified = now()
+    </sql>
+
+    <sql id="allColumnName">
+        id,
+        name,
+        japanese_name,
+        english_name,
+        gmt_created,
+        gmt_modified,
+        version
+    </sql>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"
+            parameterType="TagDO">
+        INSERT INTO tag
+        <set>
+            <include refid="setColumns"/>
+        </set>
+        ,version = 0
+    </insert>
+
+    <update id="update" parameterType="TagDO">
+        UPDATE tag
+        <set>
+            <include refid="setColumns"/>
+        </set>
+        ,version = version + 1
+        WHERE
+        id= #{id}
+        and
+        version=#{version}
+    </update>
+
+    <delete id="deleteById">
+        delete
+        from tag
+        where id = #{id}
+    </delete>
+
+</mapper>

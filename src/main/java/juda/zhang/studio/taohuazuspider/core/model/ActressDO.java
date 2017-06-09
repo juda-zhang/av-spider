@@ -12,10 +12,6 @@ public class ActressDO extends BaseDO {
      */
     private String name;
     /**
-     * 女优现用艺名姓名,曾用艺名
-     */
-    private List<String> names;
-    /**
      * 出生日期YYYY-MM-DD
      */
     private String birthday;
@@ -47,6 +43,11 @@ public class ActressDO extends BaseDO {
      * 爱好
      */
     private String hobbies;
+
+    /**
+     * 女优现用艺名姓名,曾用艺名
+     */
+    private List<String> names;
 
     public String getName() {
         return name;

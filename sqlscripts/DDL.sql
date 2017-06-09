@@ -82,3 +82,18 @@ CREATE TABLE `product_actress` (
   `version`      INT      NULL,
   PRIMARY KEY (`id`)
 );
+
+CREATE TABLE `tag` (
+  `id`            BIGINT      NOT NULL AUTO_INCREMENT
+  COMMENT '主键',
+  `name`          VARCHAR(60) NOT NULL
+  COMMENT '标签名称',
+  `english_name`  VARCHAR(60) NULL
+  COMMENT '标题',
+  `japanese_name` VARCHAR(60) NULL
+  COMMENT '系列',
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `uk_name` (`name`),
+  UNIQUE INDEX `uk_english_name` (`english_name`),
+  UNIQUE INDEX `uk_japanese_name` (`japanese_name`)
+);
