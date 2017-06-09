@@ -1,5 +1,7 @@
 package juda.zhang.studio.taohuazuspider.core.model;
 
+import java.util.List;
+
 /**
  * 描述作品的DO
  * Created by 晨辉 on 2017/6/6.
@@ -61,6 +63,18 @@ public class ProductDO extends BaseDO {
      * 发行日期,YYYY-MM-DD
      */
     private String issueDate;
+    /**
+     * 标签
+     */
+    private List<String> tags;
+    /**
+     * 所有女优姓名
+     */
+    private List<String> actresses;
+    /**
+     * 预览
+     */
+    private List<ProductImgUrlDO> previewUrls;
 
     public void setRegion(Integer region) {
         this.region = region;
@@ -80,6 +94,14 @@ public class ProductDO extends BaseDO {
 
     public void setActressName(String actressName) {
         this.actressName = actressName;
+    }
+
+    public List<String> getActresses() {
+        return actresses;
+    }
+
+    public void setActresses(List<String> actresses) {
+        this.actresses = actresses;
     }
 
     public String getActorName() {
@@ -128,6 +150,14 @@ public class ProductDO extends BaseDO {
 
     public void setSeries(String series) {
         this.series = series;
+    }
+
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
     }
 
     public String getCode() {
@@ -185,6 +215,14 @@ public class ProductDO extends BaseDO {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    public List<ProductImgUrlDO> getPreviewUrls() {
+        return previewUrls;
+    }
+
+    public void setPreviewUrls(List<ProductImgUrlDO> previewUrls) {
+        this.previewUrls = previewUrls;
     }
 
     /**
