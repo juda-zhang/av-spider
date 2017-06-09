@@ -19,8 +19,8 @@ import java.util.List;
  * Created by Juda.Zhang on 2017/6/5.
  */
 @Service("thzFileSavePipline")
-public class ThzFileSavePipline implements Pipeline {
-    private final static Logger LOGGER = LoggerFactory.getLogger(ThzFileSavePipline.class);
+public class ThzFileSavePipeline implements Pipeline {
+    private final static Logger LOGGER = LoggerFactory.getLogger(ThzFileSavePipeline.class);
     @Value("${file.save.dir}")
     private String DEST_DIR;
 

@@ -1,6 +1,7 @@
 package juda.zhang.studio.taohuazuspider.spider;
 
-import juda.zhang.studio.taohuazuspider.spider.pipline.ThzFileSavePipline;
+import juda.zhang.studio.taohuazuspider.spider.pipline.ThzDBStorePipeline;
+import juda.zhang.studio.taohuazuspider.spider.pipline.ThzFileSavePipeline;
 import juda.zhang.studio.taohuazuspider.spider.processor.ThzAisaCensoredDetailPageProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +30,9 @@ public class ThzSpiderStarter {
     @Resource
     private ThzAisaCensoredDetailPageProcessor thzAisaCensoredDetailPageProcessor;
     @Resource
-    private ThzFileSavePipline thzFileSavePipline;
+    private ThzFileSavePipeline thzFileSavePipeline;
+    @Resource
+    private ThzDBStorePipeline thzDBStorePipeline;
 
     private Spider taohuazuSpider;
 
@@ -40,7 +43,8 @@ public class ThzSpiderStarter {
                 //.setScheduler(new FileCacheQueueScheduler(TEMP_FILE_DIR))
                 .addUrl(START_URL)
                 .addPipeline(new ConsolePipeline())
-                .addPipeline(thzFileSavePipline);
+                .addPipeline(thzFileSavePipeline)
+                .addPipeline(thzDBStorePipeline);
         try {
             SpiderMonitor.instance().register(taohuazuSpider);
         } catch (JMException e) {
