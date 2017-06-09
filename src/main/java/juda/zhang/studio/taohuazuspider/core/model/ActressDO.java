@@ -24,7 +24,7 @@ public class ActressDO extends BaseDO {
      */
     private Integer height;
     /**
-     * 0:亚洲 1:欧美 2:大陆 3:港台 4:东南亚 5:中亚 6:南美 7:其他
+     * 0:亚洲 1:欧美 2:大陆 3:港台 4:东南亚 5:中亚 6:南美 7:非洲 99:其他
      */
     private Integer region;
     /**
@@ -39,10 +39,6 @@ public class ActressDO extends BaseDO {
      * 臀围
      */
     private Integer hips;
-    /**
-     * 爱好
-     */
-    private String hobbies;
 
     /**
      * 女优现用艺名姓名,曾用艺名
@@ -103,14 +99,6 @@ public class ActressDO extends BaseDO {
 
     public void setHips(Integer hips) {
         this.hips = hips;
-    }
-
-    public String getHobbies() {
-        return hobbies;
-    }
-
-    public void setHobbies(String hobbies) {
-        this.hobbies = hobbies;
     }
 
     public String getBirthday() {
