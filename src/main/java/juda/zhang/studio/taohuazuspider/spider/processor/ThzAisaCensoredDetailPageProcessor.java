@@ -2,6 +2,7 @@ package juda.zhang.studio.taohuazuspider.spider.processor;
 
 import juda.zhang.studio.taohuazuspider.core.model.FilmDO;
 import juda.zhang.studio.taohuazuspider.core.model.ProductDO;
+import juda.zhang.studio.taohuazuspider.core.model.ProductImgDO;
 import juda.zhang.studio.taohuazuspider.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +12,7 @@ import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.processor.PageProcessor;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -63,26 +65,40 @@ public class ThzAisaCensoredDetailPageProcessor implements PageProcessor {
             page.addTargetRequests(page.getHtml().links().regex(URL_LIST).all());
             //文章页
         } else if (page.getUrl().regex(URL_POST).match()) {
-            //获取完整标题
-            String fullTitle = StringUtils.trimAndUpper(page.getHtml()
-                    .xpath("//span[@id='thread_subject']/text()").toString());
-            if (StringUtils.isBlank(fullTitle)) {
-                LOGGER.info("无法正确解析的url={}", page.getUrl());
-                return;
+            //获取编号
+            String code;
+            {
+                String fullTitle = StringUtils.trimAndUpper(page.getHtml()
+                        .xpath("//span[@id='thread_subject']/text()").toString());
+                String regex = "(?<=\\[)(\\S+)(?=\\])";
+                Matcher m = Pattern.compile(regex).matcher(fullTitle);
+                code = StringUtils.trimAndUpper(m.find() ? m.group() : "");
             }
 
-            //解析编号
-            String regex = "(?<=\\[)(\\S+)(?=\\])";
-            Matcher m = Pattern.compile(regex).matcher(fullTitle);
-            String code = StringUtils.trimAndUpper(m.find() ? m.group() : "");
-            //解析标题
+            //获取内容
+            String content = page.getHtml()
+                    .xpath("//div[@id='ct']//div[@class='t_fsz']//td[@class='t_f']/text()").toString();
+            System.out.println(content);
+            String[] contents = content.split("\r\n");
+            //获取标题
+            String title = contents[0].split("：")[1];
+            //获取文件大小
+            String fileSize = contents[1].split("：")[1];
+            Long filmSize = new Long(fileSize.substring(0, fileSize.length() - 2));
+            //文件格式
+            String fileFormat = contents[2].split("：")[1];
+            //发行日期
+            String issueDate = contents[4].split("：")[1];
+            //片长
+            //演员
+            //監督
+            //シリーズ 系列
+            //メーカー 生厂商
+            //レーベル 发行商
+            //ジャンル 标签
 
             //解析封面
             String coverImgUrl = page.getHtml().xpath("//ignore_js_op/img/@file").toString();
-            if (StringUtils.isBlank(coverImgUrl)) {
-                LOGGER.info("无法正确解析封面预览的url={}", page.getUrl());
-                return;
-            }
 
             //解析预览
             List<String> previewUrls = page.getHtml()
@@ -105,14 +121,32 @@ public class ThzAisaCensoredDetailPageProcessor implements PageProcessor {
 
             ProductDO productDO = new ProductDO();
             productDO.setCode(code);
-            productDO.setTitle(fullTitle);
-            productDO.setCoverImgUrl(coverImgUrl);
-            productDO.setPreviewUrls(previewUrls);
+            productDO.setTitle(title);
+
+            List<ProductImgDO> productImgDOList = new ArrayList<>();
+            {
+                ProductImgDO productImgDO = new ProductImgDO();
+                productImgDO.setType(0);
+                productImgDO.setUrl(coverImgUrl);
+                productImgDOList.add(productImgDO);
+            }
+            {
+                if (previewUrls != null && previewUrls.size() != 0) {
+                    productImgDOList.addAll(previewUrls.stream().map(n -> {
+                        ProductImgDO productImgDO = new ProductImgDO();
+                        productImgDO.setType(0);
+                        productImgDO.setUrl(n);
+                        return productImgDO;
+                    }).collect(Collectors.toList()));
+                }
+            }
 
             FilmDO filmDO = new FilmDO();
             filmDO.setFileUrl(torrentUrl);
             page.putField("productDO", productDO);
             page.putField("filmDO", filmDO);
+            page.putField("productImgDOList", productImgDOList);
+
         } else {
             LOGGER.info("不支持的url={}", page.getUrl());
         }

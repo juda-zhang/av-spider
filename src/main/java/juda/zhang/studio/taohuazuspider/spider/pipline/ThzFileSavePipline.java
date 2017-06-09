@@ -2,6 +2,7 @@ package juda.zhang.studio.taohuazuspider.spider.pipline;
 
 import juda.zhang.studio.taohuazuspider.core.model.FilmDO;
 import juda.zhang.studio.taohuazuspider.core.model.ProductDO;
+import juda.zhang.studio.taohuazuspider.core.model.ProductImgDO;
 import juda.zhang.studio.taohuazuspider.utils.HttpUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,34 +26,29 @@ public class ThzFileSavePipline implements Pipeline {
 
     public void process(ResultItems resultItems, Task task) {
         ProductDO productDO = resultItems.get("productDO");
+        List<ProductImgDO> productImgDOList = resultItems.get("productImgDOList");
         if (productDO != null) {
             String fullTitle = productDO.getFullTitle();
             String code = productDO.getCode();
             String dir = DEST_DIR + "/" + fullTitle;
 
-            {
-                //下载封面
-                try {
-                    String coverImgUrl = productDO.getCoverImgUrl();
-                    String fileName = code + "_cover.jpg";
-                    HttpUtils.downloadFile(coverImgUrl, dir, fileName);
-                } catch (Exception e) {
-                    LOGGER.info("保存封面预览图片出错!code=" + code + ",fullTitle=" + fullTitle, e);
-                }
-            }
-
-            {
-                //下载预览
-                List<String> previewImgUrls = productDO.getPreviewUrls();
-                if (previewImgUrls != null) {
-                    for (int i = 0; i < previewImgUrls.size(); i++) {
-                        try {
-                            String previewImgUrl = previewImgUrls.get(i);
-                            String fileName = code + "_" + (i + 1) + ".jpg";
-                            HttpUtils.downloadFile(previewImgUrl, dir, fileName);
-                        } catch (Exception e) {
-                            LOGGER.info("保存内容预览图片出错!code=" + code + ",fullTitle=" + fullTitle, e);
+            if (productImgDOList != null || productImgDOList.size() != 0) {
+                int i = 1;
+                for (ProductImgDO productImgDO : productImgDOList) {
+                    String imgUrl = productImgDO.getUrl();
+                    String fileName = null;
+                    try {
+                        if (productImgDO.getType() == 0) {
+                            //下载封面
+                            fileName = code + "_cover.jpg";
+                            HttpUtils.downloadFile(imgUrl, dir, fileName);
+                        } else {
+                            fileName = code + "_" + i + ".jpg";
+                            HttpUtils.downloadFile(imgUrl, dir, fileName);
+                            i++;
                         }
+                    } catch (Exception e) {
+                        LOGGER.info("保存预览图片出错!code=" + code + ",fileName=" + fileName, e);
                     }
                 }
             }
