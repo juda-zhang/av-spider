@@ -52,3 +52,33 @@ CREATE TABLE `product_img` (
   `version`      INT           NULL,
   PRIMARY KEY (`id`)
 );
+
+CREATE TABLE `product_tag` (
+  `id`           BIGINT   NOT NULL AUTO_INCREMENT
+  COMMENT '主键',
+  `product_Id`   BIGINT   NOT NULL
+  COMMENT '影片编码',
+  `tag_Id`       BIGINT   NOT NULL
+  COMMENT '标签id',
+  `gmt_created`  DATETIME NULL
+  COMMENT '创建时间',
+  `gmt_modified` DATETIME NULL
+  COMMENT '修改时间',
+  `version`      INT      NULL,
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `product_actress` (
+  `id`           BIGINT   NOT NULL AUTO_INCREMENT
+  COMMENT '主键',
+  `product_Id`   BIGINT   NOT NULL
+  COMMENT '影片id',
+  `actress_Id`   BIGINT   NOT NULL
+  COMMENT '女演员id',
+  `gmt_created`  DATETIME NULL
+  COMMENT '创建时间',
+  `gmt_modified` DATETIME NULL
+  COMMENT '修改时间',
+  `version`      INT      NULL,
+  PRIMARY KEY (`id`)
+);

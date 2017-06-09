@@ -6,9 +6,13 @@ package juda.zhang.studio.taohuazuspider.core.model;
  */
 public class TagDO extends BaseDO {
     /**
-     * 标签名称，唯一
+     * 标签中文名称，唯一
      */
     private String name;
+    /**
+     * 标签日文名，唯一
+     */
+    private String japaneseName;
     /**
      * 标签英文名，唯一
      */
@@ -17,6 +21,14 @@ public class TagDO extends BaseDO {
      * 类别
      */
     private String category;
+
+    public String getJapaneseName() {
+        return japaneseName;
+    }
+
+    public void setJapaneseName(String japaneseName) {
+        this.japaneseName = japaneseName;
+    }
 
     public String getName() {
         return name;

@@ -10,8 +10,6 @@ public class ProductActressDO extends BaseDO {
 
     private long actressId;
 
-    private String actressName;
-
     public long getProductId() {
         return productId;
     }
@@ -26,13 +24,5 @@ public class ProductActressDO extends BaseDO {
 
     public void setActressId(long actressId) {
         this.actressId = actressId;
-    }
-
-    public String getActressName() {
-        return actressName;
-    }
-
-    public void setActressName(String actressName) {
-        this.actressName = actressName;
     }
 }

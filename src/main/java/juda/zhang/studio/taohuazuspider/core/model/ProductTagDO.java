@@ -14,11 +14,6 @@ public class ProductTagDO extends BaseDO {
      */
     private long tagId;
 
-    /**
-     * 冗余的标签名称
-     */
-    private String tagName;
-
     public long getProductId() {
         return productId;
     }
@@ -33,13 +28,5 @@ public class ProductTagDO extends BaseDO {
 
     public void setTagId(long tagId) {
         this.tagId = tagId;
-    }
-
-    public String getTagName() {
-        return tagName;
-    }
-
-    public void setTagName(String tagName) {
-        this.tagName = tagName;
     }
 }
