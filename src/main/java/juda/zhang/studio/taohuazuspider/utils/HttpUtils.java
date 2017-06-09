@@ -42,7 +42,6 @@ public class HttpUtils {
         if (!dir.exists()) {
             dir.mkdirs();
         }
-
         // 生成一个httpclient对象
         CloseableHttpClient httpclient = HttpClients.createDefault();
         HttpGet httpget = new HttpGet(url);

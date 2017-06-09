@@ -41,14 +41,20 @@ public class ThzFileSavePipline implements Pipeline {
                         if (productImgDO.getType() == 0) {
                             //下载封面
                             fileName = code + "_cover.jpg";
+                            Long startTime = System.currentTimeMillis();
                             HttpUtils.downloadFile(imgUrl, dir, fileName);
-                        } else {
+                            Long endTime = System.currentTimeMillis();
+                            LOGGER.info("下载封面图片完毕。fileName={},time={}s", fileName, (endTime - startTime) / 1000);
+                        } else if (productImgDO.getType() == 2) {
                             fileName = code + "_" + i + ".jpg";
+                            Long startTime = System.currentTimeMillis();
                             HttpUtils.downloadFile(imgUrl, dir, fileName);
+                            Long endTime = System.currentTimeMillis();
+                            LOGGER.info("下载预览图片完毕。fileName={},time={}s", fileName, (endTime - startTime) / 1000);
                             i++;
                         }
                     } catch (Exception e) {
-                        LOGGER.info("保存预览图片出错!code=" + code + ",fileName=" + fileName, e);
+                        LOGGER.info("保存图片出错!code=" + code + ",fileName=" + fileName, e);
                     }
                 }
             }
@@ -60,7 +66,10 @@ public class ThzFileSavePipline implements Pipeline {
                     try {
                         String torrentUrl = filmDO.getFileUrl();
                         String fileName = code + ".torrent";
+                        Long startTime = System.currentTimeMillis();
                         HttpUtils.downloadFile(torrentUrl, dir, fileName);
+                        Long endTime = System.currentTimeMillis();
+                        LOGGER.info("下载种子文件完毕。fileName={},time={}s", fileName, (endTime - startTime) / 1000);
                     } catch (Exception e) {
                         LOGGER.info("保存种子文件出错!code=" + code + ",fullTitle=" + fullTitle, e);
                     }

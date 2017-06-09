@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.processor.PageProcessor;
+import us.codecraft.webmagic.selector.Selectable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,25 +77,28 @@ public class ThzAisaCensoredDetailPageProcessor implements PageProcessor {
             }
 
             //获取内容
-            String content = page.getHtml()
-                    .xpath("//div[@id='ct']//div[@class='t_fsz']//td[@class='t_f']/text()").toString();
-            System.out.println(content);
-            String[] contents = content.split("\r\n");
+            Selectable content = page.getHtml()
+                    .xpath("//div[@id='ct']//div[@class='t_fsz']//td[@class='t_f']/text()");
             //获取标题
-            String title = contents[0].split("：")[1];
+            String title = StringUtils.trim(content.regex("片名：(.*?)容量").toString());
             //获取文件大小
-            String fileSize = contents[1].split("：")[1];
-            Long filmSize = new Long(fileSize.substring(0, fileSize.length() - 2));
+            long fileSize = (long) (new Double(StringUtils.trim(content.regex("容量：(.*?)GB").toString())) * 1000);
             //文件格式
-            String fileFormat = contents[2].split("：")[1];
+            String fileFormat = StringUtils.trim(content.regex("格式：(.*?)配信開始日").toString());
             //发行日期
-            String issueDate = contents[4].split("：")[1];
+            String issueDate = StringUtils.trim(content.regex("商品発売日：        (.*?)収録時間").toString());
             //片长
+            Integer duration = new Integer(StringUtils.trim(content.regex("収録時間：        (.*?)分").toString()));
             //演员
+            String actressName = StringUtils.trim(content.regex(" 出演者：        (.*?)監督").toString());
             //監督
+            String director = StringUtils.trim(content.regex(" 監督：        (.*?)シリーズ").toString());
             //シリーズ 系列
+            String series = StringUtils.trim(content.regex(" シリーズ：        (.*?)メーカー").toString());
             //メーカー 生厂商
+            String manfactor = StringUtils.trim(content.regex(" メーカー：        (.*?)ジャンル").toString());
             //レーベル 发行商
+            String producer = StringUtils.trim(content.regex(" ジャンル：        (.*?)ジャンル").toString());
             //ジャンル 标签
 
             //解析封面
@@ -122,6 +126,12 @@ public class ThzAisaCensoredDetailPageProcessor implements PageProcessor {
             ProductDO productDO = new ProductDO();
             productDO.setCode(code);
             productDO.setTitle(title);
+            productDO.setActressName(actressName);
+            productDO.setManufacturer(manfactor);
+            productDO.setSeries(series);
+            productDO.setIssueDate(issueDate);
+            productDO.setDuration(duration);
+            productDO.setDirector(director);
 
             List<ProductImgDO> productImgDOList = new ArrayList<>();
             {
@@ -134,7 +144,7 @@ public class ThzAisaCensoredDetailPageProcessor implements PageProcessor {
                 if (previewUrls != null && previewUrls.size() != 0) {
                     productImgDOList.addAll(previewUrls.stream().map(n -> {
                         ProductImgDO productImgDO = new ProductImgDO();
-                        productImgDO.setType(0);
+                        productImgDO.setType(2);
                         productImgDO.setUrl(n);
                         return productImgDO;
                     }).collect(Collectors.toList()));
@@ -143,6 +153,9 @@ public class ThzAisaCensoredDetailPageProcessor implements PageProcessor {
 
             FilmDO filmDO = new FilmDO();
             filmDO.setFileUrl(torrentUrl);
+            filmDO.setIsHD(1);
+            filmDO.setFileFormat(fileFormat);
+            filmDO.setSize(fileSize);
             page.putField("productDO", productDO);
             page.putField("filmDO", filmDO);
             page.putField("productImgDOList", productImgDOList);
