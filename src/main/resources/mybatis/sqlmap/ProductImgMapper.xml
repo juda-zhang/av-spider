@@ -65,4 +65,12 @@
         where id = #{id}
     </delete>
 
+    <select id="getById" resultMap="productImgMap">
+        select
+        <include refid="allColumnName"/>
+        from product_img
+        where
+        id = #{id}
+    </select>
+
 </mapper>

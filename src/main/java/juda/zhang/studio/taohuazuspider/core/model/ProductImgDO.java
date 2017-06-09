@@ -4,7 +4,7 @@ package juda.zhang.studio.taohuazuspider.core.model;
  * 图片预览
  * Created by zhangchenhui160 on 2017/6/9.
  */
-public class ProductImgDO {
+public class ProductImgDO extends BaseDO {
 
     private long productId;
 

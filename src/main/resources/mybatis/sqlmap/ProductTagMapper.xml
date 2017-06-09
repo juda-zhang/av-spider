@@ -62,4 +62,11 @@
         where id = #{id}
     </delete>
 
+    <select id="getById" resultMap="productTagMap">
+        select
+        <include refid="allColumnName"/>
+        from product_tag
+        where
+        id = #{id}
+    </select>
 </mapper>

@@ -3,8 +3,8 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="juda.zhang.studio.taohuazuspider.core.dal.mapper.ProductMapper">
-    <resultMap id="productMap" type="ProductDO">
+<mapper namespace="juda.zhang.studio.taohuazuspider.core.dal.mapper.ActressMapper">
+    <resultMap id="actressMap" type="ActressDO">
         <result column="id" property="id"/>
         <result column="code" property="code"/>
         <result column="title" property="title"/>
@@ -69,16 +69,16 @@
     </sql>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"
-            parameterType="ProductDO">
-        INSERT INTO product
+            parameterType="ActressDO">
+        INSERT INTO actress
         <set>
             <include refid="setColumns"/>
         </set>
         ,version = 0
     </insert>
 
-    <update id="update" parameterType="ProductDO">
-        UPDATE product
+    <update id="update" parameterType="ActressDO">
+        UPDATE actress
         <set>
             <include refid="setColumns"/>
         </set>
@@ -91,15 +91,16 @@
 
     <delete id="deleteById">
         delete
-        from product
+        from actress
         where id = #{id}
     </delete>
 
-    <select id="getById" resultMap="productMap">
+    <select id="getById" resultMap="actressMap">
         select
         <include refid="allColumnName"/>
-        from product
+        from actress
         where
         id = #{id}
     </select>
+
 </mapper>
