@@ -70,7 +70,7 @@ public class ProductDO extends BaseDO {
     /**
      * 预览
      */
-    private List<ProductImgUrlDO> previewUrls;
+    private List<ProductImgDO> previewUrls;
 
     public void setRegion(Integer region) {
         this.region = region;
@@ -205,11 +205,11 @@ public class ProductDO extends BaseDO {
         this.type = type;
     }
 
-    public List<ProductImgUrlDO> getPreviewUrls() {
+    public List<ProductImgDO> getPreviewUrls() {
         return previewUrls;
     }
 
-    public void setPreviewUrls(List<ProductImgUrlDO> previewUrls) {
+    public void setPreviewUrls(List<ProductImgDO> previewUrls) {
         this.previewUrls = previewUrls;
     }
 

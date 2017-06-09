@@ -4,13 +4,23 @@ package juda.zhang.studio.taohuazuspider.core.model;
  * 图片预览
  * Created by zhangchenhui160 on 2017/6/9.
  */
-public class ProductImgUrlDO {
+public class ProductImgDO {
+
+    private long productId;
 
     private String url;
     /**
      * 0:封面 1:封底 2:内容预览
      */
     private int type;
+
+    public long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(long productId) {
+        this.productId = productId;
+    }
 
     public String getUrl() {
         return url;

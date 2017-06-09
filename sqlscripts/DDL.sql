@@ -1,4 +1,4 @@
-CREATE TABLE `movie` (
+CREATE TABLE `product` (
   `id`            BIGINT       NOT NULL AUTO_INCREMENT
   COMMENT '主键',
   `code`          VARCHAR(15)  NOT NULL
@@ -36,3 +36,19 @@ CREATE TABLE `movie` (
   UNIQUE INDEX `uk` (`code`, `manufacturer`)
 );
 
+CREATE TABLE `product_img` (
+  `id`           BIGINT        NOT NULL AUTO_INCREMENT
+  COMMENT '主键',
+  `product_Id`   BIGINT        NOT NULL
+  COMMENT '影片编码',
+  `url`          VARCHAR(1000) NULL
+  COMMENT '链接',
+  `type`         INT           NULL
+  COMMENT '0:封面 1:封底 2:内容预览',
+  `gmt_created`  DATETIME      NULL
+  COMMENT '创建时间',
+  `gmt_modified` DATETIME      NULL
+  COMMENT '修改时间',
+  `version`      INT           NULL,
+  PRIMARY KEY (`id`)
+);

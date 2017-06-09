@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="juda.zhang.studio.taohuazuspider.core.dal.mapper.ProductImgMapper">
+    <resultMap id="productImgMap" type="ProductImgDO">
+        <result column="id" property="id"/>
+        <result column="product_id" property="productId"/>
+        <result column="url" property="url"/>
+        <result column="type" property="type"/>
+        <result column="gmt_created" javaType="java.util.Date" jdbcType="TIMESTAMP"
+                property="gmtCreated"/>
+        <result column="gmt_modified" javaType="java.util.Date" jdbcType="TIMESTAMP"
+                property="gmtModified"/>
+        <result column="version" property="version"/>
+    </resultMap>
+
+    <sql id="setColumns">
+        <if test="id != null">id=#{id},</if>
+        <if test="productId != null">product_id = #{productId},</if>
+        <if test="url != null">url = #{url},</if>
+        <if test="type != null">type = #{type},</if>
+        <choose>
+            <when test="gmtCreated != null">gmt_created = #{gmtCreated},</when>
+            <otherwise>gmt_created = now(),</otherwise>
+        </choose>
+        gmt_modified = now()
+    </sql>
+
+    <sql id="allColumnName">
+        id,
+        product_id,
+        url,
+        type,
+        gmt_created,
+        gmt_modified,
+        version
+    </sql>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"
+            parameterType="ProductImgDO">
+        INSERT INTO product_img
+        <set>
+            <include refid="setColumns"/>
+        </set>
+        ,version = 0
+    </insert>
+
+    <update id="update" parameterType="ProductImgDO">
+        UPDATE product_img
+        <set>
+            <include refid="setColumns"/>
+        </set>
+        ,version = version + 1
+        WHERE
+        id= #{id}
+        and
+        version=#{version}
+    </update>
+
+    <delete id="deleteById">
+        delete
+        from product_img
+        where id = #{id}
+    </delete>
+
+</mapper>
