@@ -6,19 +6,14 @@
 <mapper namespace="juda.zhang.studio.taohuazuspider.core.dal.mapper.ActressMapper">
     <resultMap id="actressMap" type="ActressDO">
         <result column="id" property="id"/>
-        <result column="code" property="code"/>
-        <result column="title" property="title"/>
-        <result column="manufacturer" property="manufacturer"/>
+        <result column="name" property="name"/>
+        <result column="birthday" property="birthday"/>
+        <result column="cup" property="cup"/>
+        <result column="height" property="height"/>
         <result column="region" property="region"/>
-        <result column="censored_type" property="censoredType"/>
-        <result column="type" property="type"/>
-        <result column="actress_name" property="actressName"/>
-        <result column="actor_name" property="actorName"/>
-        <result column="director" property="director"/>
-        <result column="producer" property="producer"/>
-        <result column="series" property="series"/>
-        <result column="duration" property="duration"/>
-        <result column="issue_date" property="issueDate"/>
+        <result column="bust" property="bust"/>
+        <result column="waist" property="waist"/>
+        <result column="hips" property="hips"/>
         <result column="gmt_created" javaType="java.util.Date" jdbcType="TIMESTAMP"
                 property="gmtCreated"/>
         <result column="gmt_modified" javaType="java.util.Date" jdbcType="TIMESTAMP"
@@ -28,19 +23,14 @@
 
     <sql id="setColumns">
         <if test="id != null">id=#{id},</if>
-        <if test="code != null">code = #{code},</if>
-        <if test="title != null">title = #{title},</if>
-        <if test="manufacturer != null">manufacturer = #{manufacturer},</if>
+        <if test="name != null">name = #{name},</if>
+        <if test="birthday != null">birthday = #{birthday},</if>
+        <if test="cup != null">cup = #{cup},</if>
+        <if test="height != null">height = #{height},</if>
         <if test="region != null">region = #{region},</if>
-        <if test="censoredType != null">censored_type = #{censoredType},</if>
-        <if test="type != null">type = #{type},</if>
-        <if test="actressName != null">actress_name = #{actressName},</if>
-        <if test="actorName != null">actor_name = #{actorName},</if>
-        <if test="director != null">director = #{director},</if>
-        <if test="producer != null">producer = #{producer},</if>
-        <if test="series != null">series = #{series},</if>
-        <if test="duration != null">duration = #{duration},</if>
-        <if test="issueDate != null">issue_date = #{issueDate},</if>
+        <if test="bust != null">bust = #{bust},</if>
+        <if test="waist != null">waist = #{waist},</if>
+        <if test="hips != null">hips = #{hips},</if>
         <choose>
             <when test="gmtCreated != null">gmt_created = #{gmtCreated},</when>
             <otherwise>gmt_created = now(),</otherwise>
@@ -50,19 +40,14 @@
 
     <sql id="allColumnName">
         id,
-        code,
-        title,
-        manufacturer,
+        name,
+        birthday,
+        cup,
+        height,
         region,
-        censored_type,
-        type,
-        actress_name,
-        actor_name,
-        director,
-        producer,
-        series,
-        duration,
-        issue_date,
+        bust,
+        waist,
+        hips,
         gmt_created,
         gmt_modified,
         version
