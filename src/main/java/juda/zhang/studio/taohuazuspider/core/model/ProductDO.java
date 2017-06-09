@@ -72,18 +72,6 @@ public class ProductDO extends BaseDO {
      */
     private List<ProductImgDO> previewUrls;
 
-    public void setRegion(Integer region) {
-        this.region = region;
-    }
-
-    public void setCensoredType(Integer censoredType) {
-        this.censoredType = censoredType;
-    }
-
-    public void setType(Integer type) {
-        this.type = type;
-    }
-
     public String getActressName() {
         return actressName;
     }
@@ -180,28 +168,27 @@ public class ProductDO extends BaseDO {
         this.issueDate = issueDate;
     }
 
-
-    public int getRegion() {
-        return region;
-    }
-
-    public void setRegion(int region) {
-        this.region = region;
-    }
-
-    public int getCensoredType() {
+    public Integer getCensoredType() {
         return censoredType;
     }
 
-    public void setCensoredType(int censoredType) {
+    public void setCensoredType(Integer censoredType) {
         this.censoredType = censoredType;
     }
 
-    public int getType() {
+    public Integer getRegion() {
+        return region;
+    }
+
+    public void setRegion(Integer region) {
+        this.region = region;
+    }
+
+    public Integer getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 

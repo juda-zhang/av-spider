@@ -1,8 +1,6 @@
 package juda.zhang.studio.taohuazuspider.spider.processor;
 
-import juda.zhang.studio.taohuazuspider.core.model.FilmDO;
-import juda.zhang.studio.taohuazuspider.core.model.ProductDO;
-import juda.zhang.studio.taohuazuspider.core.model.ProductImgDO;
+import juda.zhang.studio.taohuazuspider.core.model.*;
 import juda.zhang.studio.taohuazuspider.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -123,6 +121,7 @@ public class ThzAisaCensoredDetailPageProcessor implements PageProcessor {
                 torrentUrl = TORRENT_URL_PREFIX + torrentLink[1];
             }
 
+            //组装ProductDO
             ProductDO productDO = new ProductDO();
             productDO.setCode(code);
             productDO.setTitle(title);
@@ -132,7 +131,20 @@ public class ThzAisaCensoredDetailPageProcessor implements PageProcessor {
             productDO.setIssueDate(issueDate);
             productDO.setDuration(duration);
             productDO.setDirector(director);
+            productDO.setCensoredType(1);
+            productDO.setRegion(0);
+            productDO.setType(0);
 
+            //组装ActressDO
+            ActressDO actressDO = new ActressDO();
+            actressDO.setName(actressName);
+            actressDO.setRegion(0);
+
+            //组装TagDO
+            TagDO tagDO = new TagDO();
+            tagDO.setName("");
+
+            //组装FilmDO
             List<ProductImgDO> productImgDOList = new ArrayList<>();
             {
                 ProductImgDO productImgDO = new ProductImgDO();
@@ -157,8 +169,10 @@ public class ThzAisaCensoredDetailPageProcessor implements PageProcessor {
             filmDO.setFileFormat(fileFormat);
             filmDO.setSize(fileSize);
             page.putField("productDO", productDO);
-            page.putField("filmDO", filmDO);
             page.putField("productImgDOList", productImgDOList);
+            page.putField("actress", actressDO);
+            page.putField("filmDO", filmDO);
+            page.putField("tagDO", tagDO);
 
         } else {
             LOGGER.info("不支持的url={}", page.getUrl());
