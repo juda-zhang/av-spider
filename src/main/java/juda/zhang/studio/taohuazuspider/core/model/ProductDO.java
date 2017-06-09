@@ -1,10 +1,5 @@
 package juda.zhang.studio.taohuazuspider.core.model;
 
-import org.apache.commons.lang3.StringUtils;
-
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * 描述作品的DO
  * Created by 晨辉 on 2017/6/6.
@@ -39,17 +34,13 @@ public class ProductDO extends BaseDO {
      */
     private Integer type;
     /**
-     * 女优名称
+     * 主要女优姓名
      */
-    private List<String> actresses;
+    private String actressName;
     /**
-     * 男优名称
+     * 主要男优姓名
      */
-    private List<String> actors;
-    /**
-     * 标签
-     */
-    private List<String> tags;
+    private String actorName;
     /**
      * 导演
      */
@@ -70,14 +61,34 @@ public class ProductDO extends BaseDO {
      * 发行日期,YYYY-MM-DD
      */
     private String issueDate;
-    /**
-     * 封面预览
-     */
-    private String coverImgUrl;
-    /**
-     * 内容预览
-     */
-    private List<String> previewUrls;
+
+    public void setRegion(Integer region) {
+        this.region = region;
+    }
+
+    public void setCensoredType(Integer censoredType) {
+        this.censoredType = censoredType;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public String getActressName() {
+        return actressName;
+    }
+
+    public void setActressName(String actressName) {
+        this.actressName = actressName;
+    }
+
+    public String getActorName() {
+        return actorName;
+    }
+
+    public void setActorName(String actorName) {
+        this.actorName = actorName;
+    }
 
     public String getCodePrefix() {
         return codePrefix;
@@ -85,14 +96,6 @@ public class ProductDO extends BaseDO {
 
     public void setCodePrefix(String codePrefix) {
         this.codePrefix = codePrefix;
-    }
-
-    public List<String> getActors() {
-        return actors;
-    }
-
-    public void setActors(List<String> actors) {
-        this.actors = actors;
     }
 
     public String getDirector() {
@@ -127,14 +130,6 @@ public class ProductDO extends BaseDO {
         this.series = series;
     }
 
-    public List<String> getTags() {
-        return tags;
-    }
-
-    public void setTags(List<String> tags) {
-        this.tags = tags;
-    }
-
     public String getCode() {
         return code;
     }
@@ -167,29 +162,6 @@ public class ProductDO extends BaseDO {
         this.issueDate = issueDate;
     }
 
-    public List<String> getActresses() {
-        return actresses;
-    }
-
-    public void setActresses(List<String> actresses) {
-        this.actresses = actresses;
-    }
-
-    public String getCoverImgUrl() {
-        return coverImgUrl;
-    }
-
-    public void setCoverImgUrl(String coverImgUrl) {
-        this.coverImgUrl = coverImgUrl;
-    }
-
-    public List<String> getPreviewUrls() {
-        return previewUrls;
-    }
-
-    public void setPreviewUrls(List<String> previewUrls) {
-        this.previewUrls = previewUrls;
-    }
 
     public int getRegion() {
         return region;
@@ -226,19 +198,4 @@ public class ProductDO extends BaseDO {
         return sb.toString();
     }
 
-    /**
-     * 获取所有的预览
-     *
-     * @return
-     */
-    public List<String> getAllImgUrls() {
-        List<String> imgs = new ArrayList<String>();
-        if (!StringUtils.isBlank(coverImgUrl)) {
-            imgs.add(coverImgUrl);
-        }
-        if (previewUrls != null && previewUrls.size() != 0) {
-            imgs.addAll(previewUrls);
-        }
-        return imgs;
-    }
 }

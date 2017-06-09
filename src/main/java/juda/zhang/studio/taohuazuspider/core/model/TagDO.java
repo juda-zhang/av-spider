@@ -14,6 +14,10 @@ public class TagDO extends BaseDO {
      */
     private String englishName;
     /**
+     * 标签日文名，唯一
+     */
+    private String japaneseName;
+    /**
      * 类别
      */
     private String category;
@@ -40,5 +44,13 @@ public class TagDO extends BaseDO {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public String getJapaneseName() {
+        return japaneseName;
+    }
+
+    public void setJapaneseName(String japaneseName) {
+        this.japaneseName = japaneseName;
     }
 }
