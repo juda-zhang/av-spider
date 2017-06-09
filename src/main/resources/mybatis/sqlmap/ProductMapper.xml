@@ -6,82 +6,71 @@
 <mapper namespace="juda.zhang.studio.taohuazuspider.core.dal.mapper.ProductMapper">
     <resultMap id="productMap" type="ProductDO">
         <result column="id" property="id"/>
-        <result column="config_id" property="configId"/>
-        <result column="config_type" property="configType"/>
-        <result column="config_name" property="configName"/>
-        <result column="mode" property="mode"/>
-        <result column="period_number" property="periodNumber"/>
-        <result column="biz_channel" property="bizChannel"/>
-        <result column="settle_type" property="settleType"/>
-        <result column="sales_channel" property="salesChannel"/>
+        <result column="code" property="code"/>
+        <result column="title" property="title"/>
+        <result column="manufacturer" property="manufacturer"/>
+        <result column="region" property="region"/>
+        <result column="censored_type" property="censoredType"/>
         <result column="type" property="type"/>
-        <result column="group_type" property="groupType"/>
-        <result column="value" property="value"/>
-        <result column="refer_group_value" property="referGroupValue"/>
-
-        <result column="extend_value1" property="extendValue1"/>
-        <result column="extend_value2" property="extendValue2"/>
-        <result column="extend_value3" property="extendValue3"/>
-        <result column="extra" property="extra"/>
-
-        <result column="gmt_create" javaType="java.util.Date" jdbcType="TIMESTAMP"
-                property="gmtCreate"/>
-        <result column="gmt_modify" javaType="java.util.Date" jdbcType="TIMESTAMP"
-                property="gmtModify"/>
+        <result column="actress_name" property="actressName"/>
+        <result column="actor_name" property="actorName"/>
+        <result column="director" property="director"/>
+        <result column="producer" property="producer"/>
+        <result column="series" property="series"/>
+        <result column="duration" property="duration"/>
+        <result column="issue_date" property="issueDate"/>
+        <result column="gmt_created" javaType="java.util.Date" jdbcType="TIMESTAMP"
+                property="gmtCreated"/>
+        <result column="gmt_modified" javaType="java.util.Date" jdbcType="TIMESTAMP"
+                property="gmtModified"/>
         <result column="version" property="version"/>
     </resultMap>
 
     <sql id="setColumns">
         <if test="id != null">id=#{id},</if>
-        <if test="configId != null">config_id = #{configId},</if>
-        <if test="configType != null">config_type = #{configType},</if>
-        <if test="configName != null">config_name = #{configName},</if>
-        <if test="mode != null">mode = #{mode},</if>
-        <if test="periodNumber != null">period_number = #{periodNumber},</if>
-        <if test="bizChannel != null">biz_channel = #{bizChannel},</if>
-        <if test="settleType != null">settle_type = #{settleType},</if>
-        <if test="salesChannel != null">sales_channel = #{salesChannel},</if>
+        <if test="code != null">code = #{code},</if>
+        <if test="title != null">title = #{title},</if>
+        <if test="manufacturer != null">manufacturer = #{manufacturer},</if>
+        <if test="region != null">region = #{region},</if>
+        <if test="censoredType != null">censored_type = #{censoredType},</if>
         <if test="type != null">type = #{type},</if>
-        <if test="groupType != null">group_type = #{groupType},</if>
-        <if test="value != null">value = #{value},</if>
-        <if test="referGroupValue != null">refer_group_value = #{referGroupValue},</if>
-        <if test="extendValue1 != null">extend_value1 = #{extendValue1},</if>
-        <if test="extendValue2 != null">extend_value2 = #{extendValue2},</if>
-        <if test="extendValue3 != null">extend_value3 = #{extendValue3},</if>
-        <if test="extra != null">extra = #{extra},</if>
+        <if test="actressName != null">actress_name = #{actressName},</if>
+        <if test="actorName != null">actor_name = #{actorName},</if>
+        <if test="director != null">director = #{director},</if>
+        <if test="producer != null">producer = #{producer},</if>
+        <if test="series != null">series = #{series},</if>
+        <if test="duration != null">duration = #{duration},</if>
+        <if test="issueDate != null">issue_date = #{issueDate},</if>
         <choose>
-            <when test="gmtCreate != null">gmt_create = #{gmtCreate},</when>
-            <otherwise>gmt_create = now(),</otherwise>
+            <when test="gmtCreated != null">gmt_created = #{gmtCreated},</when>
+            <otherwise>gmt_created = now(),</otherwise>
         </choose>
-        gmt_modify = now()
+        gmt_modified = now()
     </sql>
 
     <sql id="allColumnName">
         id,
-        config_id,
-        config_type,
-        config_name,
-        mode,
-        period_number,
-        biz_channel,
-        settle_type,
-        sales_channel,
+        code,
+        title,
+        manufacturer,
+        region,
+        censored_type,
         type,
-        group_type,
-        value,
-        refer_group_value,
-        extend_value1,
-        extend_value2,
-        extend_value3,
-        extra,
-        gmt_create,
-        gmt_modify,
+        actress_name,
+        actor_name,
+        director,
+        producer,
+        series,
+        duration,
+        issue_date,
+        gmt_created,
+        gmt_modified,
         version
     </sql>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"
             parameterType="ProductDO">
-        INSERT INTO co_commission
+        INSERT INTO product
         <set>
             <include refid="setColumns"/>
         </set>
@@ -89,7 +78,7 @@
     </insert>
 
     <update id="update" parameterType="ProductDO">
-        UPDATE co_commission
+        UPDATE product
         <set>
             <include refid="setColumns"/>
         </set>
@@ -102,7 +91,7 @@
 
     <delete id="deleteById">
         delete
-        from co_commission
+        from product
         where id = #{id}
     </delete>
 

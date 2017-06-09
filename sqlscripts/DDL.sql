@@ -1,16 +1,15 @@
 CREATE TABLE `movie` (
   `id`            BIGINT       NOT NULL AUTO_INCREMENT
   COMMENT '主键',
-  `code_prefix`   VARCHAR(10)  NULL
-  COMMENT '编号的前缀',
   `code`          VARCHAR(15)  NOT NULL
   COMMENT '影片编码',
   `title`         VARCHAR(150) NULL
   COMMENT '标题',
-  `series`        VARCHAR(150) NULL,
-  `main_actress`  VARCHAR(60)  NULL
+  `series`        VARCHAR(150) NULL
+  COMMENT '系列',
+  `actress_name`  VARCHAR(60)  NULL
   COMMENT '主要女演员名称',
-  `main_actor`    VARCHAR(60)  NULL
+  `actor_name`    VARCHAR(60)  NULL
   COMMENT '主要男演员名称',
   `manufacturer`  VARCHAR(60)  NULL
   COMMENT '制片商',

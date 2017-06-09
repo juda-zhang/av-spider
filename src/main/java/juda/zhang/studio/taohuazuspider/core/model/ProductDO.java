@@ -8,10 +8,6 @@ import java.util.List;
  */
 public class ProductDO extends BaseDO {
     /**
-     * 编号前缀
-     */
-    private String codePrefix;
-    /**
      * 编号
      */
     private String code;
@@ -110,14 +106,6 @@ public class ProductDO extends BaseDO {
 
     public void setActorName(String actorName) {
         this.actorName = actorName;
-    }
-
-    public String getCodePrefix() {
-        return codePrefix;
-    }
-
-    public void setCodePrefix(String codePrefix) {
-        this.codePrefix = codePrefix;
     }
 
     public String getDirector() {
