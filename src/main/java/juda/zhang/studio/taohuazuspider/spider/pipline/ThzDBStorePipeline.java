@@ -30,6 +30,9 @@ public class ThzDBStorePipeline implements Pipeline {
         ActressDO actressDO = resultItems.get("actress");
         TagDO tagDO = resultItems.get("tagDO");
 
-        productManager.addOrUpdateProduct(productDO);
+        if (productDO != null) {
+            productManager.addOrUpdateProduct(productDO);
+        }
+
     }
 }

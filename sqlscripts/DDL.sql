@@ -33,7 +33,7 @@ CREATE TABLE `product` (
   COMMENT '修改时间',
   `version`       INT          NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `uk` (`code`, `manufacturer`)
+  UNIQUE INDEX `uk` (`code`)
 );
 
 CREATE TABLE `product_img` (

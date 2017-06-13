@@ -102,4 +102,12 @@
         where
         id = #{id}
     </select>
+
+    <select id="getByCode" resultMap="productMap">
+        select
+        <include refid="allColumnName"/>
+        from product
+        where
+        code = #{code}
+    </select>
 </mapper>
