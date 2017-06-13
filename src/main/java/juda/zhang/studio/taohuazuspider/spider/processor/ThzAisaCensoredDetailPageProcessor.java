@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
  */
 @Service("thzAisaCensoredDetailPageProcessor")
 public class ThzAisaCensoredDetailPageProcessor implements PageProcessor {
-    public static final String USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_2) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.65 Safari/537.31";
+    private static final String USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_2) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.65 Safari/537.31";
     private final static Logger LOGGER = LoggerFactory.getLogger(ThzAisaCensoredDetailPageProcessor.class);
     @Value("${site.domain}")
     private String DOMAIN;
@@ -84,19 +84,19 @@ public class ThzAisaCensoredDetailPageProcessor implements PageProcessor {
             //文件格式
             String fileFormat = StringUtils.trim(content.regex("格式：(.*?)配信開始日").toString());
             //发行日期
-            String issueDate = StringUtils.trim(content.regex("商品発売日：        (.*?)収録時間").toString());
+            String issueDate = StringUtils.trim(content.regex("商品発売日：[  ]*(.*?)収録時間").toString());
             //片长
-            Integer duration = new Integer(StringUtils.trim(content.regex("収録時間：        (.*?)分").toString()));
+            Integer duration = new Integer(StringUtils.trim(content.regex("収録時間：[  ]*(.*?)分").toString()));
             //演员
-            String actressName = StringUtils.trim(content.regex(" 出演者：        (.*?)監督").toString());
+            String actressName = StringUtils.trim(content.regex(" 出演者：[  ]*(.*?)監督").toString());
             //監督
-            String director = StringUtils.trim(content.regex(" 監督：        (.*?)シリーズ").toString());
+            String director = StringUtils.trim(content.regex(" 監督：[  ]*(.*?)シリーズ").toString());
             //シリーズ 系列
-            String series = StringUtils.trim(content.regex(" シリーズ：        (.*?)メーカー").toString());
+            String series = StringUtils.trim(content.regex(" シリーズ：[  ]*(.*?)メーカー").toString());
             //メーカー 生厂商
-            String manfactor = StringUtils.trim(content.regex(" メーカー：        (.*?)ジャンル").toString());
+            String manfactor = StringUtils.trim(content.regex(" メーカー：[  ]*(.*?)レーベル").toString());
             //レーベル 发行商
-            String producer = StringUtils.trim(content.regex(" ジャンル：        (.*?)ジャンル").toString());
+            String producer = StringUtils.trim(content.regex(" レーベル：[  ]*(.*?)ジャンル").toString());
             //ジャンル 标签
 
             //解析封面
