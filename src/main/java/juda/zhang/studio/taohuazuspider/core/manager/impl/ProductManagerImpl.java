@@ -24,10 +24,12 @@ public class ProductManagerImpl implements ProductManager {
     public void addOrUpdateProduct(ProductDO productDO) {
         String code = productDO.getCode();
         ProductDO productDOExist = productMapper.getByCode(code);
-
         if (productDOExist != null) {
-            LOGGER.info("产品已存在，忽略！code={}", productDO.getCode());
+            LOGGER.info("产品已存在，更新内容！code={}", productDO.getCode());
+            productDO.setId(productDOExist.getId());
+            productMapper.update(productDO);
         } else {
+            LOGGER.info("新增产品！code={}", productDO.getCode());
             productMapper.insert(productDO);
         }
     }
