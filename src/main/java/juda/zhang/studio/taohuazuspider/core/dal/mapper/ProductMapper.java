@@ -1,6 +1,7 @@
 package juda.zhang.studio.taohuazuspider.core.dal.mapper;
 
 import juda.zhang.studio.taohuazuspider.core.model.ProductDO;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 /**
@@ -8,4 +9,13 @@ import org.springframework.stereotype.Service;
  */
 @Service("productMapper")
 public interface ProductMapper extends GenricMapper<ProductDO> {
+
+    /**
+     * 根据编码获取唯一产品
+     *
+     * @param code
+     * @return
+     */
+    ProductDO getByCode(@Param("code") String code);
+
 }

@@ -22,6 +22,13 @@ public class ProductManagerImpl implements ProductManager {
 
     @Override
     public void addOrUpdateProduct(ProductDO productDO) {
+        String code = productDO.getCode();
+        ProductDO productDOExist = productMapper.getByCode(code);
 
+        if (productDOExist != null) {
+            LOGGER.info("产品已存在，忽略！code={}", productDO.getCode());
+        } else {
+            productMapper.insert(productDO);
+        }
     }
 }
