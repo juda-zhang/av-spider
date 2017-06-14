@@ -26,7 +26,7 @@ public class ProductManagerImpl implements ProductManager {
     private ActressMapper actressMapper;
 
     @Override
-    public void addOrUpdateProduct(ProductDO productDO) {
+    public ProductDO addOrUpdateProduct(ProductDO productDO) {
         String code = productDO.getCode();
         ProductDO productDOExist = productMapper.getByCode(code);
         if (productDOExist != null) {
@@ -38,10 +38,12 @@ public class ProductManagerImpl implements ProductManager {
             LOGGER.info("新增产品！code={}", productDO.getCode());
             productMapper.insert(productDO);
         }
+
+        return productDO;
     }
 
     @Override
-    public void addOrUpdateActress(ActressDO actressDO) {
+    public ActressDO addOrUpdateActress(ActressDO actressDO) {
         String name = actressDO.getName();
         ActressDO actressDOExist = actressMapper.getByName(name);
         if (actressDOExist != null) {
@@ -53,5 +55,7 @@ public class ProductManagerImpl implements ProductManager {
             LOGGER.info("新增女演员！name={}", actressDOExist.getName());
             actressMapper.insert(actressDO);
         }
+
+        return actressDO;
     }
 }

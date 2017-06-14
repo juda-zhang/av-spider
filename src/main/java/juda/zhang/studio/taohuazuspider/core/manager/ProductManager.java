@@ -13,12 +13,12 @@ public interface ProductManager {
      *
      * @param productDO
      */
-    void addOrUpdateProduct(ProductDO productDO);
+    ProductDO addOrUpdateProduct(ProductDO productDO);
 
     /**
      * 添加或更新女演员
      *
      * @param actressDO
      */
-    void addOrUpdateActress(ActressDO actressDO);
+    ActressDO addOrUpdateActress(ActressDO actressDO);
 }
