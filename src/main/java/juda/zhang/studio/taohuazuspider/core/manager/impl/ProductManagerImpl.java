@@ -1,7 +1,9 @@
 package juda.zhang.studio.taohuazuspider.core.manager.impl;
 
+import juda.zhang.studio.taohuazuspider.core.dal.mapper.ActressMapper;
 import juda.zhang.studio.taohuazuspider.core.dal.mapper.ProductMapper;
 import juda.zhang.studio.taohuazuspider.core.manager.ProductManager;
+import juda.zhang.studio.taohuazuspider.core.model.ActressDO;
 import juda.zhang.studio.taohuazuspider.core.model.ProductDO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +22,9 @@ public class ProductManagerImpl implements ProductManager {
     @Resource
     private ProductMapper productMapper;
 
+    @Resource
+    private ActressMapper actressMapper;
+
     @Override
     public void addOrUpdateProduct(ProductDO productDO) {
         String code = productDO.getCode();
@@ -27,10 +32,26 @@ public class ProductManagerImpl implements ProductManager {
         if (productDOExist != null) {
             LOGGER.info("产品已存在，更新内容！code={}", productDO.getCode());
             productDO.setId(productDOExist.getId());
+            productDO.setGmtCreated(productDOExist.getGmtCreated());
             productMapper.update(productDO);
         } else {
             LOGGER.info("新增产品！code={}", productDO.getCode());
             productMapper.insert(productDO);
+        }
+    }
+
+    @Override
+    public void addOrUpdateActress(ActressDO actressDO) {
+        String name = actressDO.getName();
+        ActressDO actressDOExist = actressMapper.getByName(name);
+        if (actressDOExist != null) {
+            LOGGER.info("女演员已存在，更新内容！name={}", actressDOExist.getName());
+            actressDO.setId(actressDOExist.getId());
+            actressDO.setGmtCreated(actressDOExist.getGmtCreated());
+            actressMapper.update(actressDO);
+        } else {
+            LOGGER.info("新增女演员！name={}", actressDOExist.getName());
+            actressMapper.insert(actressDO);
         }
     }
 }

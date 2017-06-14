@@ -1,5 +1,6 @@
 package juda.zhang.studio.taohuazuspider.core.manager;
 
+import juda.zhang.studio.taohuazuspider.core.model.ActressDO;
 import juda.zhang.studio.taohuazuspider.core.model.ProductDO;
 
 /**
@@ -13,4 +14,11 @@ public interface ProductManager {
      * @param productDO
      */
     void addOrUpdateProduct(ProductDO productDO);
+
+    /**
+     * 添加或更新女演员
+     *
+     * @param actressDO
+     */
+    void addOrUpdateActress(ActressDO actressDO);
 }

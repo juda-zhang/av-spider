@@ -88,4 +88,11 @@
         id = #{id}
     </select>
 
+    <select id="getByName" resultMap="actressMap">
+        select
+        <include refid="allColumnName"/>
+        from actress
+        where
+        name = #{name}
+    </select>
 </mapper>
