@@ -5,7 +5,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 /**
- * Created by zhangchenhui160 on 2017/6/9.
+ * Created by Juda.Zhang on 2017/6/9.
  */
 @Service("actressMapper")
 public interface ActressMapper extends GenricMapper<ActressDO> {

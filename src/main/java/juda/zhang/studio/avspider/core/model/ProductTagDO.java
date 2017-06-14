@@ -2,7 +2,7 @@ package juda.zhang.studio.avspider.core.model;
 
 /**
  * 产品和标签的多对多关系
- * Created by zhangchenhui160 on 2017/6/9.
+ * Created by Juda.Zhang on 2017/6/9.
  */
 public class ProductTagDO extends BaseDO {
     /**

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 
 /**
- * Created by zhangchenhui160 on 2017/6/9.
+ * Created by Juda.Zhang on 2017/6/9.
  */
 @Service("productManager")
 public class ProductManagerImpl implements ProductManager {

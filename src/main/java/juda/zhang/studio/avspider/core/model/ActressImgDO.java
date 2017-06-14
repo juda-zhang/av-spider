@@ -2,7 +2,7 @@ package juda.zhang.studio.avspider.core.model;
 
 /**
  * 图片预览
- * Created by zhangchenhui160 on 2017/6/9.
+ * Created by Juda.Zhang on 2017/6/9.
  */
 public class ActressImgDO {
 

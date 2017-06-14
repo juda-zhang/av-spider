@@ -6,7 +6,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import java.util.Date;
 
 /**
- * Created by 晨辉 on 2017/6/7.
+ * Created by Juda.Zhang on 2017/6/7.
  */
 public abstract class BaseDO {
 

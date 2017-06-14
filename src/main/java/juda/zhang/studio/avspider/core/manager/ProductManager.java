@@ -5,7 +5,7 @@ import juda.zhang.studio.avspider.core.model.ProductDO;
 
 /**
  * 管理产品的管理类
- * Created by zhangchenhui160 on 2017/6/9.
+ * Created by Juda.Zhang on 2017/6/9.
  */
 public interface ProductManager {
     /**
