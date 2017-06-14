@@ -1,6 +1,7 @@
 package juda.zhang.studio.avspider.spider.processor;
 
 
+import juda.zhang.studio.avspider.spider.taohuazu.processor.ThzAisaCensoredDetailPageProcessor;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

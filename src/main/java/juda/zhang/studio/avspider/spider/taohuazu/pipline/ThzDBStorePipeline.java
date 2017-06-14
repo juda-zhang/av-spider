@@ -1,4 +1,4 @@
-package juda.zhang.studio.avspider.spider.pipline;
+package juda.zhang.studio.avspider.spider.taohuazu.pipline;
 
 import juda.zhang.studio.avspider.core.manager.ProductManager;
 import juda.zhang.studio.avspider.core.model.*;

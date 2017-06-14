@@ -1,8 +1,8 @@
 package juda.zhang.studio.avspider.spider;
 
-import juda.zhang.studio.avspider.spider.pipline.ThzDBStorePipeline;
-import juda.zhang.studio.avspider.spider.pipline.ThzFileSavePipeline;
-import juda.zhang.studio.avspider.spider.processor.ThzAisaCensoredDetailPageProcessor;
+import juda.zhang.studio.avspider.spider.taohuazu.pipline.ThzDBStorePipeline;
+import juda.zhang.studio.avspider.spider.taohuazu.pipline.ThzFileSavePipeline;
+import juda.zhang.studio.avspider.spider.taohuazu.processor.ThzAisaCensoredDetailPageProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
