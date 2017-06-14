@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="juda.zhang.studio.taohuazuspider.core.dal.mapper.ProductMapper">
+<mapper namespace="juda.zhang.studio.avspider.core.dal.mapper.ProductMapper">
     <resultMap id="productMap" type="ProductDO">
         <result column="id" property="id"/>
         <result column="code" property="code"/>
