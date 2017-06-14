@@ -25,12 +25,13 @@ public class HttpUtils {
     /**
      * 下载文件
      *
-     * @param url      完整url
-     * @param filePath 下载到的目的路径
-     * @param fileName 下载后的文件名
+     * @param url       完整url
+     * @param filePath  下载到的目的路径
+     * @param fileName  下载后的文件名
+     * @param overwrite 是否覆盖
      * @throws IOException
      */
-    public static void downloadFile(String url, String filePath, String fileName)
+    public static void downloadFile(String url, String filePath, String fileName, boolean overwrite)
             throws IOException {
 
         if (StringUtils.isBlank(url) || StringUtils.isBlank(filePath)) {
@@ -42,6 +43,14 @@ public class HttpUtils {
         if (!dir.exists()) {
             dir.mkdirs();
         }
+
+        String fileFullName = filePath + "/" + fileName;
+        File file = new File(fileFullName);
+        if (!overwrite && file.exists()) {
+            LOGGER.info("文件已存在!fileFullName={}", fileFullName);
+            return;
+        }
+
         // 生成一个httpclient对象
         CloseableHttpClient httpclient = HttpClients.createDefault();
         HttpGet httpget = new HttpGet(url);
@@ -51,9 +60,6 @@ public class HttpUtils {
             if (status >= 200 && status < 300) {
                 HttpEntity entity = response.getEntity();
                 InputStream in = entity.getContent();
-
-                String fileFullName = filePath + "/" + fileName;
-                File file = new File(fileFullName);
                 try {
                     FileOutputStream fout = new FileOutputStream(file);
                     int l;
@@ -75,4 +81,17 @@ public class HttpUtils {
         httpclient.close();
     }
 
+
+    /**
+     * 下载文件。如果文件已存在则覆盖
+     *
+     * @param url      完整url
+     * @param filePath 下载到的目的路径
+     * @param fileName 下载后的文件名
+     * @throws IOException
+     */
+    public static void downloadFile(String url, String filePath, String fileName)
+            throws IOException {
+        downloadFile(url, filePath, fileName, true);
+    }
 }

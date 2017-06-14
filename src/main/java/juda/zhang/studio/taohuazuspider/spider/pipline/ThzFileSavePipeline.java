@@ -42,19 +42,19 @@ public class ThzFileSavePipeline implements Pipeline {
                             //下载封面
                             fileName = code + "_cover.jpg";
                             Long startTime = System.currentTimeMillis();
-                            HttpUtils.downloadFile(imgUrl, dir, fileName);
+                            HttpUtils.downloadFile(imgUrl, dir, fileName, false);
                             Long endTime = System.currentTimeMillis();
                             LOGGER.info("下载封面图片完毕。fileName={},time={}s", fileName, (endTime - startTime) / 1000);
                         } else if (productImgDO.getType() == 2) {
                             fileName = code + "_" + i + ".jpg";
                             Long startTime = System.currentTimeMillis();
-                            HttpUtils.downloadFile(imgUrl, dir, fileName);
+                            HttpUtils.downloadFile(imgUrl, dir, fileName, false);
                             Long endTime = System.currentTimeMillis();
                             LOGGER.info("下载预览图片完毕。fileName={},time={}s", fileName, (endTime - startTime) / 1000);
                             i++;
                         }
                     } catch (Exception e) {
-                        LOGGER.info("保存图片出错!code=" + code + ",fileName=" + fileName, e);
+                        LOGGER.info("保存图片出错!code=" + code + ",fileName=" + fileName + ",imgUrl=" + imgUrl, e);
                     }
                 }
             }
@@ -63,15 +63,15 @@ public class ThzFileSavePipeline implements Pipeline {
                 //下载种子
                 FilmDO filmDO = resultItems.get("filmDO");
                 if (filmDO != null) {
+                    String torrentUrl = filmDO.getFileUrl();
                     try {
-                        String torrentUrl = filmDO.getFileUrl();
                         String fileName = code + ".torrent";
                         Long startTime = System.currentTimeMillis();
-                        HttpUtils.downloadFile(torrentUrl, dir, fileName);
+                        HttpUtils.downloadFile(torrentUrl, dir, fileName, false);
                         Long endTime = System.currentTimeMillis();
                         LOGGER.info("下载种子文件完毕。fileName={},time={}s", fileName, (endTime - startTime) / 1000);
                     } catch (Exception e) {
-                        LOGGER.info("保存种子文件出错!code=" + code + ",fullTitle=" + fullTitle, e);
+                        LOGGER.info("保存种子文件出错!code=" + code + ",fullTitle=" + fullTitle + ",torrentUrl=" + torrentUrl, e);
                     }
                 }
             }
