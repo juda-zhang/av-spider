@@ -99,31 +99,31 @@ CREATE TABLE `tag` (
 );
 
 CREATE TABLE `actress` (
-  `id`           BIGINT      NOT NULL AUTO_INCREMENT
+  `id`           BIGINT       NOT NULL AUTO_INCREMENT
   COMMENT '主键',
-  `name`         VARCHAR(60) NOT NULL
+  `name`         VARCHAR(200) NOT NULL
   COMMENT '演员唯一现用名，可能为中文，日文，英文',
-  `birthday`     VARCHAR(20) NULL
+  `birthday`     VARCHAR(20)  NULL
   COMMENT '生日YYYY-MM-DD',
-  `cup`          VARCHAR(2)  NULL
+  `cup`          VARCHAR(2)   NULL
   COMMENT '罩杯',
-  `actress_name` VARCHAR(60) NULL
+  `actress_name` VARCHAR(60)  NULL
   COMMENT '主要女演员名称',
-  `height`       INT         NULL
+  `height`       INT          NULL
   COMMENT '身高，单位cm',
-  `region`       INT         NULL
+  `region`       INT          NULL
   COMMENT '0:亚洲 1:欧美 2:大陆 3:港台 4:东南亚 5:中亚 6:南美 7:非洲 99:其他',
-  `bust`         INT         NULL
+  `bust`         INT          NULL
   COMMENT '胸围',
-  `waist`        INT         NULL
+  `waist`        INT          NULL
   COMMENT '腰围',
-  `hips`         INT         NULL
+  `hips`         INT          NULL
   COMMENT '臀围',
-  `gmt_created`  DATETIME    NULL
+  `gmt_created`  DATETIME     NULL
   COMMENT '创建时间',
-  `gmt_modified` DATETIME    NULL
+  `gmt_modified` DATETIME     NULL
   COMMENT '修改时间',
-  `version`      INT         NULL,
+  `version`      INT          NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `uk_name` (`name`)
 );

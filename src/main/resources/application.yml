@@ -13,7 +13,7 @@ spring:
 
 site:
 #域名
-  domain: taohuabbs.org
+  domain: thzav.com
 #超时时间(ms)
   timeout:  300000
 #休眠时间(ms)
