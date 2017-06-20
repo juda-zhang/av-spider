@@ -1,6 +1,9 @@
 package juda.zhang.studio.avspider.spider.taohuazu.processor;
 
-import juda.zhang.studio.avspider.core.model.*;
+import juda.zhang.studio.avspider.core.model.FilmDO;
+import juda.zhang.studio.avspider.core.model.ProductDO;
+import juda.zhang.studio.avspider.core.model.ProductImgDO;
+import juda.zhang.studio.avspider.core.model.TagDO;
 import juda.zhang.studio.avspider.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +15,7 @@ import us.codecraft.webmagic.processor.PageProcessor;
 import us.codecraft.webmagic.selector.Selectable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -125,7 +129,12 @@ public class ThzAisaCensoredDetailPageProcessor implements PageProcessor {
             ProductDO productDO = new ProductDO();
             productDO.setCode(code);
             productDO.setTitle(title);
-            productDO.setActressName(actressName);
+
+            //处理多女演员的情况。
+            List<String> actresses = !org.apache.commons.lang3.StringUtils.isBlank(actressName) ?
+                    Arrays.asList(actressName.split(" ")) : new ArrayList<>();
+
+            productDO.setActressName(actresses.size() == 1 ? actressName : null);
             productDO.setManufacturer(manfactor);
             productDO.setSeries(series);
             productDO.setIssueDate(issueDate);
@@ -134,11 +143,7 @@ public class ThzAisaCensoredDetailPageProcessor implements PageProcessor {
             productDO.setCensoredType(1);
             productDO.setRegion(0);
             productDO.setType(0);
-
-            //组装ActressDO
-            ActressDO actressDO = new ActressDO();
-            actressDO.setName(actressName);
-            actressDO.setRegion(0);
+            productDO.setActresses(actresses);
 
             //组装TagDO
             TagDO tagDO = new TagDO();
@@ -170,7 +175,6 @@ public class ThzAisaCensoredDetailPageProcessor implements PageProcessor {
             filmDO.setSize(fileSize);
             page.putField("productDO", productDO);
             page.putField("productImgDOList", productImgDOList);
-            page.putField("actress", actressDO);
             page.putField("filmDO", filmDO);
             page.putField("tagDO", tagDO);
 
