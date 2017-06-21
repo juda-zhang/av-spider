@@ -98,7 +98,7 @@ public class ThzAisaCensoredDetailPageProcessor implements PageProcessor {
             //シリーズ 系列
             String series = StringUtils.trim(content.regex(" シリーズ：[  ]*(.*?)メーカー").toString());
             //メーカー 生厂商
-            String manfactor = StringUtils.trim(content.regex(" メーカー：[  ]*(.*?)レーベル").toString());
+            String manufactor = StringUtils.trim(content.regex(" メーカー：[  ]*(.*?)レーベル").toString());
             //レーベル 发行商
             String producer = StringUtils.trim(content.regex(" レーベル：[  ]*(.*?)ジャンル").toString());
             //ジャンル 标签
@@ -125,6 +125,11 @@ public class ThzAisaCensoredDetailPageProcessor implements PageProcessor {
                 torrentUrl = TORRENT_URL_PREFIX + torrentLink[1];
             }
 
+            //过滤空内容
+            actressName = StringUtils.equals(actressName, "----") ? null : actressName;
+            director = StringUtils.equals(director, "----") ? null : director;
+            series = StringUtils.equals(series, "----") ? null : series;
+
             //组装ProductDO
             ProductDO productDO = new ProductDO();
             productDO.setCode(code);
@@ -135,7 +140,7 @@ public class ThzAisaCensoredDetailPageProcessor implements PageProcessor {
                     Arrays.asList(actressName.split(" ")) : new ArrayList<>();
 
             productDO.setActressName(actresses.size() == 1 ? actressName : null);
-            productDO.setManufacturer(manfactor);
+            productDO.setManufacturer(manufactor);
             productDO.setSeries(series);
             productDO.setIssueDate(issueDate);
             productDO.setDuration(duration);

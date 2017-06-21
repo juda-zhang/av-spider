@@ -33,7 +33,10 @@ public class ProductManagerImpl implements ProductManager {
             LOGGER.info("产品已存在，更新内容！code={}", productDO.getCode());
             productDO.setId(productDOExist.getId());
             productDO.setGmtCreated(productDOExist.getGmtCreated());
-            productMapper.update(productDO);
+            productDO.setVersion(productDOExist.getVersion());
+            if (productMapper.update(productDO) != 1) {
+                LOGGER.error("更新产品时并发冲突！code={},productId={}", productDO.getCode(), productDO.getId());
+            }
         } else {
             LOGGER.info("新增产品！code={}", productDO.getCode());
             productMapper.insert(productDO);
