@@ -43,10 +43,11 @@ public class HttpUtils {
             retryTimes -= 1;
             if (retryTimes <= 0) {
                 //重试次数用完
-                LOGGER.error("下载重试次数使用完毕。仍然下载失败！url=" + url + ",filePath=" + filePath + ",fileName=" + fileName, e);
+                LOGGER.error("下载重试次数使用完毕。仍然下载失败！url=" + url + ",fileName=" + fileName, e);
             } else {
                 //重试次数未用完
-                LOGGER.debug("下载异常！url=" + url + ",filePath=" + filePath + ",fileName=" + fileName, e);
+                LOGGER.debug("下载异常！url=" + url + ",fileName=" + fileName, e);
+                LOGGER.info("开始重试下载文件。url={},fileName={},retryTimes={}", url, fileName, retryTimes);
                 downloadFile(url, filePath, fileName, overwrite, retryTimes);
             }
         }
@@ -65,7 +66,7 @@ public class HttpUtils {
             throws IOException {
 
         if (StringUtils.isBlank(url) || StringUtils.isBlank(filePath)) {
-            LOGGER.error("文件路径为空!url={},filePath={},fileName={}", url, fileName, fileName);
+            LOGGER.error("文件路径为空!url={},fileName={}", url, fileName);
             throw new RuntimeException("参数为空!");
         }
 
@@ -91,14 +92,14 @@ public class HttpUtils {
                 HttpEntity entity = response.getEntity();
                 InputStream in = entity.getContent();
                 try {
-                    FileOutputStream fout = new FileOutputStream(file);
+                    FileOutputStream flout = new FileOutputStream(file);
                     int l;
                     byte[] tmp = new byte[1024];
                     while ((l = in.read(tmp)) != -1) {
-                        fout.write(tmp, 0, l);
+                        flout.write(tmp, 0, l);
                     }
-                    fout.flush();
-                    fout.close();
+                    flout.flush();
+                    flout.close();
                 } finally {
                     in.close();
                 }

@@ -51,12 +51,17 @@ public class ThzAisaCensoredDetailPageProcessor implements PageProcessor {
     private int TIME_OUT;
     @Value("${site.sleep.time}")
     private int SLEEP_TIME;
+    @Value("${file.retry.times}")
+    private int retryTimes;
+
     private Site site = Site
             .me()
             .setDomain(DOMAIN)
             .setSleepTime(SLEEP_TIME)
             .setTimeOut(TIME_OUT)
-            .setUserAgent(USER_AGENT);
+            .setUserAgent(USER_AGENT)
+            .setCycleRetryTimes(retryTimes)
+            .setRetryTimes(retryTimes);
 
     public void process(Page page) {
 
