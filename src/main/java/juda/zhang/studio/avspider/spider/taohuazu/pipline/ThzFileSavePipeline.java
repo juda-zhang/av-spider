@@ -23,6 +23,8 @@ public class ThzFileSavePipeline implements Pipeline {
     private final static Logger LOGGER = LoggerFactory.getLogger(ThzFileSavePipeline.class);
     @Value("${file.save.dir}")
     private String DEST_DIR;
+    @Value("${file.retry.times}")
+    private int retryTimes;
 
     public void process(ResultItems resultItems, Task task) {
         ProductDO productDO = resultItems.get("productDO");
@@ -42,13 +44,13 @@ public class ThzFileSavePipeline implements Pipeline {
                             //下载封面
                             fileName = code + "_cover.jpg";
                             Long startTime = System.currentTimeMillis();
-                            HttpUtils.downloadFile(imgUrl, dir, fileName, false);
+                            HttpUtils.downloadFile(imgUrl, dir, fileName, false, retryTimes);
                             Long endTime = System.currentTimeMillis();
                             LOGGER.info("下载封面图片完毕。fileName={},time={}s", fileName, (endTime - startTime) / 1000);
                         } else if (productImgDO.getType() == 2) {
                             fileName = code + "_" + i + ".jpg";
                             Long startTime = System.currentTimeMillis();
-                            HttpUtils.downloadFile(imgUrl, dir, fileName, false);
+                            HttpUtils.downloadFile(imgUrl, dir, fileName, false, retryTimes);
                             Long endTime = System.currentTimeMillis();
                             LOGGER.info("下载预览图片完毕。fileName={},time={}s", fileName, (endTime - startTime) / 1000);
                             i++;
@@ -67,7 +69,7 @@ public class ThzFileSavePipeline implements Pipeline {
                     try {
                         String fileName = code + ".torrent";
                         Long startTime = System.currentTimeMillis();
-                        HttpUtils.downloadFile(torrentUrl, dir, fileName, false);
+                        HttpUtils.downloadFile(torrentUrl, dir, fileName, false, retryTimes);
                         Long endTime = System.currentTimeMillis();
                         LOGGER.info("下载种子文件完毕。fileName={},time={}s", fileName, (endTime - startTime) / 1000);
                     } catch (Exception e) {

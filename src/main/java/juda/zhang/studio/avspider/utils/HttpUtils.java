@@ -23,6 +23,36 @@ public class HttpUtils {
     private final static Logger LOGGER = LoggerFactory.getLogger(HttpUtils.class);
 
     /**
+     * 下载文件，重试指定次数
+     *
+     * @param url        完整url
+     * @param filePath   下载到的目的路径
+     * @param fileName   下载后的文件名
+     * @param overwrite  是否覆盖
+     * @param retryTimes 重试的次数
+     */
+    public static void downloadFile(String url, String filePath, String fileName, boolean overwrite, int retryTimes) {
+        if (retryTimes <= 0) {
+            return;
+        }
+
+        try {
+            downloadFile(url, filePath, fileName, overwrite);
+        } catch (IOException e) {
+            //重试次数减1
+            retryTimes -= 1;
+            if (retryTimes <= 0) {
+                //重试次数用完
+                LOGGER.error("下载重试次数使用完毕。仍然下载失败！url=" + url + ",filePath=" + filePath + ",fileName=" + fileName, e);
+            } else {
+                //重试次数未用完
+                LOGGER.debug("下载异常！url=" + url + ",filePath=" + filePath + ",fileName=" + fileName, e);
+                downloadFile(url, filePath, fileName, overwrite, retryTimes);
+            }
+        }
+    }
+
+    /**
      * 下载文件
      *
      * @param url       完整url

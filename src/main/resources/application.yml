@@ -21,6 +21,8 @@ site:
 
 #文件保存路径
 file.save.dir: "C:/TaoHuaZu"
+#文件下载重试次数
+file.retry.times: 3
 #爬虫线程数
 spider.thread:  5
 
