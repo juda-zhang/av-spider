@@ -4,6 +4,7 @@ import juda.zhang.studio.avspider.core.model.FilmDO;
 import juda.zhang.studio.avspider.core.model.ProductDO;
 import juda.zhang.studio.avspider.core.model.ProductImgDO;
 import juda.zhang.studio.avspider.utils.HttpUtils;
+import juda.zhang.studio.avspider.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,7 +33,7 @@ public class ThzFileSavePipeline implements Pipeline {
         if (productDO != null) {
             String fullTitle = productDO.getFullTitle();
             String code = productDO.getCode();
-            String dir = DEST_DIR + "/" + fullTitle;
+            String dir = DEST_DIR + "/" + StringUtils.filterSpecialDirString(fullTitle);
 
             if (productImgDOList != null || productImgDOList.size() != 0) {
                 int i = 1;
