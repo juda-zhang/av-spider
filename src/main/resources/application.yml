@@ -11,18 +11,32 @@ spring:
     testOnBorrow: true
     validationQuery: SZELECT 1
 
-site:
-#域名
-  domain: thzav.com
-#超时时间(ms)
-  timeout:  300000
-#休眠时间(ms)
-  sleep.time: 500
 
-#文件保存路径
-file.save.dir: "C:/TaoHuaZu"
 #文件下载重试次数
 file.retry.times: 5
 #爬虫线程数
-spider.thread:  10
+spider.thread:  5
+
+#桃花族网站
+site:
+#域名
+  domain: thzbbt.net
+#超时时间(ms)
+  timeout:  300000
+#休眠时间(ms)
+  sleep.time: 5000
+  #文件保存路径
+file.save.dir: "D:/TaoHuaZu"
+
+#DMM网站
+dmm:
+  site:
+    #域名
+    domain: www.dmm.co.jp
+    #超时时间(ms)
+    timeout:  300000
+    #休眠时间(ms)
+    sleep.time: 5000
+  #文件保存路径
+  file.save.dir: "D:/DMM"
 
