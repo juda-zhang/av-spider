@@ -20,7 +20,7 @@ spider.thread:  5
 #桃花族网站
 site:
 #域名
-  domain: thzbbt.net
+  domain: thibt.com
 #超时时间(ms)
   timeout:  300000
 #休眠时间(ms)
