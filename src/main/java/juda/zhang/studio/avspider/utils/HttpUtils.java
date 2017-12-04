@@ -3,6 +3,7 @@ package juda.zhang.studio.avspider.utils;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
@@ -28,16 +29,25 @@ public class HttpUtils {
      * @param url        完整url
      * @param filePath   下载到的目的路径
      * @param fileName   下载后的文件名
+     * @param connectionTimeout 连接超时时间
+     * @param socketTimeout 数据传输超时时间
      * @param overwrite  是否覆盖
      * @param retryTimes 重试的次数
+     *
      */
-    public static void downloadFile(String url, String filePath, String fileName, boolean overwrite, int retryTimes) {
+    public static void downloadFile(String url,
+                                    String filePath,
+                                    String fileName,
+                                    int connectionTimeout,
+                                    int socketTimeout,
+                                    boolean overwrite,
+                                    int retryTimes) {
         if (retryTimes <= 0) {
             return;
         }
 
         try {
-            downloadFile(url, filePath, fileName, overwrite);
+            downloadFile(url, filePath, fileName, connectionTimeout, socketTimeout, overwrite);
         } catch (IOException e) {
             //重试次数减1
             retryTimes -= 1;
@@ -48,7 +58,7 @@ public class HttpUtils {
                 //重试次数未用完
                 LOGGER.debug("下载异常！url=" + url + ",fileName=" + fileName, e);
                 LOGGER.info("开始重试下载文件。url={},fileName={},retryTimes={}", url, fileName, retryTimes);
-                downloadFile(url, filePath, fileName, overwrite, retryTimes);
+                downloadFile(url, filePath, fileName, connectionTimeout, socketTimeout, overwrite, retryTimes);
             }
         }
     }
@@ -59,10 +69,17 @@ public class HttpUtils {
      * @param url       完整url
      * @param filePath  下载到的目的路径
      * @param fileName  下载后的文件名
+     * @param connectionTimeout 连接超时时间
+     * @param socketTimeout 数据传输超时时间
      * @param overwrite 是否覆盖
      * @throws IOException
      */
-    public static void downloadFile(String url, String filePath, String fileName, boolean overwrite)
+    public static void downloadFile(String url,
+                                    String filePath,
+                                    String fileName,
+                                    int connectionTimeout,
+                                    int socketTimeout,
+                                    boolean overwrite)
             throws IOException {
 
         if (StringUtils.isBlank(url) || StringUtils.isBlank(filePath)) {
@@ -85,6 +102,11 @@ public class HttpUtils {
         // 生成一个httpclient对象
         CloseableHttpClient httpclient = HttpClients.createDefault();
         HttpGet httpget = new HttpGet(url);
+        RequestConfig requestConfig = RequestConfig.custom()
+                .setConnectTimeout(connectionTimeout)
+                .setConnectionRequestTimeout(1000)
+                .setSocketTimeout(socketTimeout).build();
+        httpget.setConfig(requestConfig);
         // Create a custom response handler
         ResponseHandler<Boolean> responseHandler = response -> {
             int status = response.getStatusLine().getStatusCode();
@@ -119,10 +141,16 @@ public class HttpUtils {
      * @param url      完整url
      * @param filePath 下载到的目的路径
      * @param fileName 下载后的文件名
+     * @param connectionTimeout 连接超时时间
+     * @param socketTimeout 数据传输超时时间
      * @throws IOException
      */
-    public static void downloadFile(String url, String filePath, String fileName)
+    public static void downloadFile(String url,
+                                    String filePath,
+                                    String fileName,
+                                    int connectionTimeout,
+                                    int socketTimeout)
             throws IOException {
-        downloadFile(url, filePath, fileName, true);
+        downloadFile(url, filePath, fileName, connectionTimeout, socketTimeout, true);
     }
 }

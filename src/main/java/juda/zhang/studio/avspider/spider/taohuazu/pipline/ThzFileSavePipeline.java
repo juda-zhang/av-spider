@@ -26,6 +26,10 @@ public class ThzFileSavePipeline implements Pipeline {
     private String DEST_DIR;
     @Value("${file.retry.times}")
     private int retryTimes;
+    @Value("${file.connection.timeout}")
+    private int connectionTimeout;
+    @Value("${file.socket.timeout}")
+    private int socketTimeout;
 
     public void process(ResultItems resultItems, Task task) {
         ProductDO productDO = resultItems.get("productDO");
@@ -45,13 +49,13 @@ public class ThzFileSavePipeline implements Pipeline {
                             //下载封面
                             fileName = code + "_cover.jpg";
                             Long startTime = System.currentTimeMillis();
-                            HttpUtils.downloadFile(imgUrl, dir, fileName, false, retryTimes);
+                            HttpUtils.downloadFile(imgUrl, dir, fileName, connectionTimeout, socketTimeout, false, retryTimes);
                             Long endTime = System.currentTimeMillis();
                             LOGGER.info("下载封面图片完毕。fileName={},time={}s", fileName, (endTime - startTime) / 1000);
                         } else if (productImgDO.getType() == 2) {
                             fileName = code + "_" + i + ".jpg";
                             Long startTime = System.currentTimeMillis();
-                            HttpUtils.downloadFile(imgUrl, dir, fileName, false, retryTimes);
+                            HttpUtils.downloadFile(imgUrl, dir, fileName, connectionTimeout, socketTimeout, false, retryTimes);
                             Long endTime = System.currentTimeMillis();
                             LOGGER.info("下载预览图片完毕。fileName={},time={}s", fileName, (endTime - startTime) / 1000);
                             i++;
@@ -70,7 +74,7 @@ public class ThzFileSavePipeline implements Pipeline {
                     try {
                         String fileName = code + ".torrent";
                         Long startTime = System.currentTimeMillis();
-                        HttpUtils.downloadFile(torrentUrl, dir, fileName, false, retryTimes);
+                        HttpUtils.downloadFile(torrentUrl, dir, fileName, connectionTimeout, socketTimeout, false, retryTimes);
                         Long endTime = System.currentTimeMillis();
                         LOGGER.info("下载种子文件完毕。fileName={},time={}s", fileName, (endTime - startTime) / 1000);
                     } catch (Exception e) {

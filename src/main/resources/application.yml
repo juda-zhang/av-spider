@@ -13,18 +13,21 @@ spring:
 
 
 #文件下载重试次数
-file.retry.times: 5
+file:
+  retry.times: 5
+  connection.timeout: 5000
+  socket.timeout: 50000
 #爬虫线程数
-spider.thread:  5
+spider.thread:  10
 
 #桃花族网站
 site:
 #域名
-  domain: thibt.com
+  domain: thzthz.net
 #超时时间(ms)
-  timeout:  300000
+  timeout:  20000
 #休眠时间(ms)
-  sleep.time: 5000
+  sleep.time: 2000
   #文件保存路径
 file.save.dir: "D:/TaoHuaZu"
 
@@ -34,9 +37,9 @@ dmm:
     #域名
     domain: www.dmm.co.jp
     #超时时间(ms)
-    timeout:  300000
+    timeout:  10000
     #休眠时间(ms)
-    sleep.time: 5000
-  #文件保存路径
+    sleep.time: 2000
+    #文件保存路径
   file.save.dir: "D:/DMM"
 

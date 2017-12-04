@@ -14,6 +14,6 @@ public class HttpUtilsTest {
         String url = "https://www.baidu.com/img/baidu_jgylogo3.gif";
         String filePath = "C:/UnitTest";
         String fileName = "baidu.gif";
-        HttpUtils.downloadFile(url, filePath, fileName);
+        HttpUtils.downloadFile(url, filePath, fileName, 5000, 1000);
     }
 }
