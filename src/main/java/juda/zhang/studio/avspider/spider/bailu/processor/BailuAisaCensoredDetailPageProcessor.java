@@ -22,13 +22,13 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
- * 解析桃花族论坛亚洲有碼原創板块的帖子，下载其中的种子文件以及图片。
+ * 解析百撸论坛亚洲有碼原創板块的帖子，下载其中的种子文件以及图片。
  * Created by Juda.Zhang on 2017/6/5.
  */
-@Service("thzAisaCensoredDetailPageProcessor")
-public class BaiLuAisaCensoredDetailPageProcessor implements PageProcessor {
+@Service("bailuAisaCensoredDetailPageProcessor")
+public class BailuAisaCensoredDetailPageProcessor implements PageProcessor {
     private static final String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36";
-    private final static Logger LOGGER = LoggerFactory.getLogger(BaiLuAisaCensoredDetailPageProcessor.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(BailuAisaCensoredDetailPageProcessor.class);
     @Value("${site.domain}")
     private String DOMAIN;
     /*

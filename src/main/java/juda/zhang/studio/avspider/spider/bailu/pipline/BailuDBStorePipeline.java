@@ -16,9 +16,9 @@ import java.util.List;
  * 数据库保存的管道
  * Created by Juda.Zhang on 2017/6/9.
  */
-@Service("thzDBStorePipeline")
-public class BaiLuDBStorePipeline implements Pipeline {
-    private final static Logger LOGGER = LoggerFactory.getLogger(BaiLuDBStorePipeline.class);
+@Service("bailuDBStorePipeline")
+public class BailuDBStorePipeline implements Pipeline {
+    private final static Logger LOGGER = LoggerFactory.getLogger(BailuDBStorePipeline.class);
     @Resource
     private ProductManager productManager;
 
