@@ -1,4 +1,4 @@
-package juda.zhang.studio.avspider.spider.taohuazu.processor;
+package juda.zhang.studio.avspider.spider.bailu.processor;
 
 import juda.zhang.studio.avspider.core.model.FilmDO;
 import juda.zhang.studio.avspider.core.model.ProductDO;
@@ -26,9 +26,9 @@ import java.util.stream.Collectors;
  * Created by Juda.Zhang on 2017/6/5.
  */
 @Service("thzAisaCensoredDetailPageProcessor")
-public class ThzAisaCensoredDetailPageProcessor implements PageProcessor {
+public class BaiLuAisaCensoredDetailPageProcessor implements PageProcessor {
     private static final String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36";
-    private final static Logger LOGGER = LoggerFactory.getLogger(ThzAisaCensoredDetailPageProcessor.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(BaiLuAisaCensoredDetailPageProcessor.class);
     @Value("${site.domain}")
     private String DOMAIN;
     /*

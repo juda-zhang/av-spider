@@ -18,18 +18,30 @@ file:
   connection.timeout: 5000
   socket.timeout: 50000
 #爬虫线程数
-spider.thread:  10
+spider.thread:  2
 
 #桃花族网站
 site:
 #域名
-  domain: thzthz.net
+  domain: thz6.com
 #超时时间(ms)
   timeout:  20000
 #休眠时间(ms)
-  sleep.time: 2000
+  sleep.time: 5000
   #文件保存路径
 file.save.dir: "D:/TaoHuaZu"
+
+#百撸社区
+bailu:
+  site:
+    #域名
+        domain: www.671hd.com
+        #超时时间(ms)
+        timeout:  10000
+        #休眠时间(ms)
+        sleep.time: 2000
+        #文件保存路径
+  file.save.dir: "D:/BAILU"
 
 #DMM网站
 dmm:
