@@ -22,7 +22,7 @@ import java.util.List;
 @Service("bailuFileSavePipline")
 public class BailuFileSavePipeline implements Pipeline {
     private final static Logger LOGGER = LoggerFactory.getLogger(BailuFileSavePipeline.class);
-    @Value("${file.save.dir}")
+    @Value("${bailu.file.save.dir}")
     private String DEST_DIR;
     @Value("${file.retry.times}")
     private int retryTimes;

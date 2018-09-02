@@ -29,27 +29,27 @@ import java.util.stream.Collectors;
 public class BailuAisaCensoredDetailPageProcessor implements PageProcessor {
     private static final String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36";
     private final static Logger LOGGER = LoggerFactory.getLogger(BailuAisaCensoredDetailPageProcessor.class);
-    @Value("${site.domain}")
+    @Value("${bailu.site.domain}")
     private String DOMAIN;
     /*
     列表页面
-    http://taohuabbs.cc/forum-220-1.html
-    http://taohuabbs.cc/forum-220-2.html
+    http://www.671hd.com/forum-2-1.html
+    http://www.671hd.com/forum-2-2.html
      */
-    @Value("http://${site.domain}/forum-220-\\d+\\.html")
+    @Value("http://${bailu.site.domain}/forum-2-\\d+\\.html")
     private String URL_LIST;
     /*
     详情页面
-    http://taohuabbs.cc/thread-1064269-1-1.html
-    http://taohuabbs.cc/thread-1064271-1-5.html
+    http://www.671hd.com/thread-52730-1-1.html
+    http://www.671hd.com/thread-103-1-25.html
      */
-    @Value("http://${site.domain}/thread-\\d+-\\d+-\\d+\\.html")
+    @Value("http://${bailu.site.domain}/thread-\\d+-\\d+-\\d+\\.html")
     private String URL_POST;
-    @Value("http://${site.domain}/forum.php?mod=attachment&aid=")
+    @Value("http://${bailu.site.domain}/forum.php?mod=attachment&aid=")
     private String TORRENT_URL_PREFIX;
-    @Value("${site.timeout}")
+    @Value("${bailu.site.timeout}")
     private int TIME_OUT;
-    @Value("${site.sleep.time}")
+    @Value("${bailu.site.sleep.time}")
     private int SLEEP_TIME;
     @Value("${file.retry.times}")
     private int retryTimes;
@@ -68,10 +68,10 @@ public class BailuAisaCensoredDetailPageProcessor implements PageProcessor {
         //列表页
         if (page.getUrl().regex(URL_LIST).match()) {
             Selectable normalThread = page.getHtml().$("tbody[id^=normalthread_]");
-            Selectable classIcn = normalThread.xpath("//tbody/tr/td[@class='icn']");
+            Selectable classIcn = normalThread.xpath("//tbody/tr/td/div/h2/span");
             Selectable links = classIcn.links();
             page.addTargetRequests(page.getHtml().$("tbody[id^=normalthread_]")
-                    .xpath("//tbody/tr/td[@class='icn']").links().regex(URL_POST).all());
+                    .xpath("//tbody/tr/td/div/h2/span").links().regex(URL_POST).all());
             //获取所有符合列表格式的列表页
             page.addTargetRequests(page.getHtml().links().regex(URL_LIST).all());
             //文章页
@@ -88,7 +88,7 @@ public class BailuAisaCensoredDetailPageProcessor implements PageProcessor {
 
             //获取内容
             Selectable content = page.getHtml()
-                    .xpath("//div[@id='ct']//div[@class='t_fsz']//td[@class='t_f']/text()");
+                    .xpath("//div[@class='t_fsz']//td[@class='t_f']/text()");
             //获取标题
             String title = StringUtils.trim(content.regex("片名：(.*?)容量").toString());
 
@@ -111,6 +111,7 @@ public class BailuAisaCensoredDetailPageProcessor implements PageProcessor {
             //レーベル 发行商
             String producer = "";
             //ジャンル 标签
+            String genre = "";
             try {
                 //文件格式
                 fileFormat = StringUtils.trim(content.regex("格式：(.*?)配信開始日").toString());
@@ -121,34 +122,29 @@ public class BailuAisaCensoredDetailPageProcessor implements PageProcessor {
                 //片长
                 duration = new Integer(StringUtils.trim(content.regex("収録時間：[  ]*(.*?)分").toString()));
                 //演员
-                actressName = StringUtils.trim(content.regex(" 出演者：[  ]*(.*?)監督").toString());
-                //監督
-                director = StringUtils.trim(content.regex(" 監督：[  ]*(.*?)シリーズ").toString());
-                //シリーズ 系列
-                series = StringUtils.trim(content.regex(" シリーズ：[  ]*(.*?)メーカー").toString());
-                //メーカー 生厂商
-                manufactor = StringUtils.trim(content.regex(" メーカー：[  ]*(.*?)レーベル").toString());
+                actressName = StringUtils.trim(content.regex(" 出演者：[  ]*(.*?)レーベル").toString());
                 //レーベル 发行商
                 producer = StringUtils.trim(content.regex(" レーベル：[  ]*(.*?)ジャンル").toString());
                 //ジャンル 标签
+                genre = StringUtils.trim(content.regex(" ジャンル：[  ]*(.*?)品番").toString());
             } catch (Exception e) {
                 LOGGER.warn("获取信息出错,使用默认值！", e);
             }
 
             //解析封面
-            String coverImgUrl = page.getHtml().xpath("//ignore_js_op/img/@file").toString();
+            String coverImgUrl = page.getHtml().xpath("//div[@class='t_fsz']//td[@class='t_f']/").xpath("//ignore_js_op/img/@file").toString();
 
             //解析预览
-            List<String> previewUrls = page.getHtml()
-                    .xpath("//div[@class='pcb']//td[@class='t_f']/img/@file").all();
+            List<String> previewUrls = page.getHtml().xpath("//div[@class='t_fsz']//td[@class='t_f']/")
+                    .xpath("//img/@src").all();
             if (previewUrls != null || previewUrls.size() != 0) {
                 previewUrls = previewUrls.stream().filter(n -> !StringUtils.isBlank(n)).collect(Collectors.toList());
             }
 
             //解析种子地址
             String torrentUrl;
-            String[] torrentLink = page.getHtml()
-                    .xpath("//div[@class='pattl']//a/@href").toString()
+            String[] torrentLink = page.getHtml().xpath("//div[@class='t_fsz']//td[@class='t_f']/")
+                    .xpath("//ignore_js_op//a/@href").toString()
                     .split("aid=");
             if (torrentLink == null || torrentLink.length < 2) {
                 LOGGER.info("无法正确解析种子的url={}", page.getUrl());

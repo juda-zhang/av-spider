@@ -67,9 +67,6 @@ public class ThzAisaCensoredDetailPageProcessor implements PageProcessor {
 
         //列表页
         if (page.getUrl().regex(URL_LIST).match()) {
-            Selectable normalThread = page.getHtml().$("tbody[id^=normalthread_]");
-            Selectable classIcn = normalThread.xpath("//tbody/tr/td[@class='icn']");
-            Selectable links = classIcn.links();
             page.addTargetRequests(page.getHtml().$("tbody[id^=normalthread_]")
                     .xpath("//tbody/tr/td[@class='icn']").links().regex(URL_POST).all());
             //获取所有符合列表格式的列表页

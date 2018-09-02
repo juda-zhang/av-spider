@@ -18,6 +18,6 @@ public class Main {
 
     public static void main(String[] args) {
         SpringApplication.run(Main.class, args);
-        LOGGER.info("taohuazu-spider has been started successfully!");
+        LOGGER.info("spider has been started successfully!");
     }
 }
